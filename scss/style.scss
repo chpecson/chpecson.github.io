@@ -45,7 +45,6 @@ h6 {
     color: $dark;
     font-family: $font-family-secondary;
     font-weight: $font-weight-medium;
-    font-display: swap;
 }
 
 a {
@@ -65,6 +64,11 @@ li {
 /*******************
     2.Helper
 *******************/
+
+[class^="devicon-"], [class*=" devicon-"] {
+    font-family: 'devicon';
+    // font-display: swap;
+}
 
 .card{
     border: none;

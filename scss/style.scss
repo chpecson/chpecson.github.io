@@ -17,6 +17,8 @@ File: Main scss file
 9.Responsive
 ********************************/
 
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css');
+@import url('https://cdn.jsdelivr.net/gh/konpa/devicon/devicon.css');
 
 @import "variables";
 
@@ -43,6 +45,7 @@ h6 {
     color: $dark;
     font-family: $font-family-secondary;
     font-weight: $font-weight-medium;
+    font-display: swap;
 }
 
 a {
@@ -53,6 +56,10 @@ a {
 p{
     line-height: 1.8;
     font-size: 15px;
+}
+
+li {
+    font-size: 1rem;
 }
 
 /*******************
@@ -385,7 +392,7 @@ $value in $colors {
     position: relative;
     width: 256px;
     height: 256px;
-    background: url('/images/profile.png');
+    background: url('/images/profile.webp');
     background-size: cover;
     border-radius: 50%;
 

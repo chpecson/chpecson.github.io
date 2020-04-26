@@ -1,15 +1,9 @@
-/* Template Name: Invoza - Bootstrap 4 Landing Page Tamplate
-   Author: Themesdesign
-   File Description: Main JS file of the template
-*/
-
-
 ! function($) {
     "use strict";
 
-    var Invoza = function() {};
+    var Portfolio = function() {};
 
-    Invoza.prototype.initTypedJs = function() {
+    Portfolio.prototype.initTypedJs = function() {
         new Typed('.profession', {
             strings: ["I'm a Hybrid Mobile App Developer.", "I'm a Blockchain Developer.", "I bet on Javascript."],
             typeSpeed: 90,
@@ -18,7 +12,7 @@
         });
     },
 
-    Invoza.prototype.initStickyMenu = function() {
+    Portfolio.prototype.initStickyMenu = function() {
         $(window).scroll(function() {
             var scroll = $(window).scrollTop();
         
@@ -30,7 +24,7 @@
         });
     },
 
-    Invoza.prototype.initSmoothLink = function() {
+    Portfolio.prototype.initSmoothLink = function() {
         $('.navbar a').on('click', function(event) {
             var $anchor = $(this);
             $('html, body').stop().animate({
@@ -40,14 +34,14 @@
         });
     },
 
-    Invoza.prototype.initScrollspy = function() {
+    Portfolio.prototype.initScrollspy = function() {
         $("#navbarCollapse").scrollspy({
             offset:20
         });
     },
 
 
-    Invoza.prototype.init = function() {
+    Portfolio.prototype.init = function() {
         feather.replace();
 
         this.initTypedJs();
@@ -56,12 +50,12 @@
         this.initScrollspy();
     },
     //init
-    $.Invoza = new Invoza(), $.Invoza.Constructor = Invoza;
+    $.Portfolio = new Portfolio(), $.Portfolio.Constructor = Portfolio;
 }(window.jQuery),
 
 
 //initializing
 function($) {
     "use strict";
-    $.Invoza.init();
+    $.Portfolio.init();
 }(window.jQuery);

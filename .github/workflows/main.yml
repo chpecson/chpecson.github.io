@@ -33,7 +33,7 @@ jobs:
           # Relative path(s) to SASS or SCSS file, eg. _scss/main.scss
           source: scss/style.scss
           # Path(s) compiled CSS should be saved, eg. ~/workspace_sass/assets/css/main.css
-          destination: css/style.min.css
+          destination: ~/css/style.min.css
           # Array (Action splits on ":"), of directories to look under for imports and used modules
           includePaths: true # optional
           # String, either "expanded", "compressed", "nested", "compact"; defaults to "compressed"
@@ -60,6 +60,4 @@ jobs:
           sourceMapRoot: false # optional
           # Outputs render_options used for compiling CSS
           debug: false # optional
-          
-      - name: Sass Build Done
-        run: echo Done building sass files.
+

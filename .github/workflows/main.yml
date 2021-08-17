@@ -33,7 +33,7 @@ jobs:
           # Relative path(s) to SASS or SCSS file, eg. _scss/main.scss
           source: scss/style.scss
           # Path(s) compiled CSS should be saved, eg. ~/workspace_sass/assets/css/main.css
-          destination: css/style.min.css
+          destination: $GITHUB_WORKSPACE/css/style.min.css
           # Array (Action splits on ":"), of directories to look under for imports and used modules
           includePaths: true
           # String, either "expanded", "compressed", "nested", "compact"; defaults to "compressed"

@@ -37,5 +37,5 @@ jobs:
         uses: test-room-7/action-update-file@v1
         with:
           file-path: css/style.min.css
-          commit-msg: Update resources
+          commit-msg: ${{ github.event.head_commit.message }}
           github-token: ${{ secrets.GITHUB_TOKEN }}

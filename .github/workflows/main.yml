@@ -37,7 +37,7 @@ jobs:
           # Array (Action splits on ":"), of directories to look under for imports and used modules
           includePaths: true # optional
           # String, either "expanded", "compressed", "nested", "compact"; defaults to "compressed"
-          outputStyle: compressed# optional
+          outputStyle: compressed #optional
           # Integer and float precision when compiling CSS, eg. `20`
           precision: tab # optional
           # String, either "space" or "tab", default "space"

@@ -35,29 +35,10 @@ jobs:
           # Path(s) compiled CSS should be saved, eg. ~/workspace_sass/assets/css/main.css
           destination: css/style.min.css
           # Array (Action splits on ":"), of directories to look under for imports and used modules
-          includePaths: true # optional
+          includePaths: true
           # String, either "expanded", "compressed", "nested", "compact"; defaults to "compressed"
-          outputStyle: compressed #optional
-          # Integer and float precision when compiling CSS, eg. `20`
-          precision: tab # optional
-          # String, either "space" or "tab", default "space"
-          indentType: 2 # optional
-          # Integer, of tabs/spaces used to indent, eg. `1`
-          indentWidth: 2 # optional, default is 2
-          # String, either "lf", "lfcr", "cr", or "crlf", default "lf"
-          linefeed: false # optional
-          # Boolean, default `false` if `true` emits comments where CSS was compiled from
-          sourceComments: false # optional
+          outputStyle: compressed
           # May be boolean or string, see https://sass-lang.com/documentation/js-api#sourcemap
-          sourceMap: false # optional
-          # Boolean, when `true` compiled CSS is not linked to source map
-          omitSourceMapUrl: false # optional
-          # Boolean, when `true` embeds contents of Sass files that contributed to compiled CSS
-          sourceMapContents: false # optional
-          # Boolean, when `true` embeds source map within compiled CSS
-          sourceMapEmbed: false # optional
-          # String, prepended to all links from from source map to Sass files
-          sourceMapRoot: false # optional
+          sourceMap: false
           # Outputs render_options used for compiling CSS
-          debug: false # optional
-
+          debug: false

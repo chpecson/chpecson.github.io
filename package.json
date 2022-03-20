@@ -1,0 +1,25 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-sass": "node scripts/sass.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chpecson/chpecson.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chpecson/chpecson.github.io/issues"
+  },
+  "homepage": "https://github.com/chpecson/chpecson.github.io#readme",
+  "devDependencies": {
+    "jshint": "^2.13.1",
+    "mkdirp": "^1.0.4",
+    "node-sass": "^7.0.0"
+  }
+}

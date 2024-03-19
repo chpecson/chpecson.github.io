@@ -5,7 +5,7 @@
 
     Portfolio.prototype.initTypedJs = function() {
         new Typed('.profession', {
-            strings: ["I'm a Front End Developer.", "I'm a Blockchain Developer.", "I bet on Javascript."],
+            strings: ["I'm a Front End Developer.", "I bet on Javascript."],
             typeSpeed: 90,
             smartBackspace: true,
             loop: true

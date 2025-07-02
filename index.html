@@ -1,944 +1,1493 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Christian Pecson</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Christian Pecson</title>
 
-        <link rel="preload" href="https://cdn.jsdelivr.net">
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
-        <!-- Primary Meta Tags -->
-        <meta name="title" content="Christian Pecson">
-        <meta name="description" content="Hi I'm Christian. I'm a Front End Developer, and I bet on Javascript.">
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Christian Pecson" />
+    <meta
+      name="description"
+      content="Hi I'm Christian. I'm a Front End Developer, and I bet on Javascript."
+    />
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://chpecson.dev/">
-        <meta property="og:title" content="Christian Pecson">
-        <meta property="og:description" content="Hi I'm Christian. I'm a Front End Developer, and I bet on Javascript.">
-        <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://chpecson.dev/" />
+    <meta property="og:title" content="Christian Pecson" />
+    <meta
+      property="og:description"
+      content="Hi I'm Christian. I'm a Front End Developer, and I bet on Javascript."
+    />
+    <meta
+      property="og:image"
+      content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png"
+    />
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="https://chpecson.dev/">
-        <meta property="twitter:title" content="Christian Pecson">
-        <meta property="twitter:description" content="Hi I'm Christian. I'm a Front End Developer, and I bet on Javascript.">
-        <meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://chpecson.dev/" />
+    <meta property="twitter:title" content="Christian Pecson" />
+    <meta
+      property="twitter:description"
+      content="Hi I'm Christian. I'm a Front End Developer, and I bet on Javascript."
+    />
+    <meta
+      property="twitter:image"
+      content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png"
+    />
 
-        <!-- Custom  css -->
-        <link rel="stylesheet" type="text/css" href="css/style.min.css" />
+    <!-- Custom  css -->
+    <link rel="stylesheet" type="text/css" href="css/style.min.css" />
+  </head>
 
-    </head>
+  <body>
+    <!--Navbar Start-->
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark"
+    >
+      <section class="container">
+        <!-- LOGO -->
+        <a class="logo text-uppercase text-primary" href="#home">
+          Christian Pecson
+        </a>
 
-    <body>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+            <li class="nav-item active">
+              <a href="#home" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="#experience" class="nav-link">Experience</a>
+            </li>
+            <li class="nav-item">
+              <a href="#skills" class="nav-link">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a href="#projects" class="nav-link">Projects</a>
+            </li>
+            <li class="nav-item">
+              <a href="#certificates" class="nav-link">Certificates</a>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+    <!-- Navbar End -->
 
-        <!--Navbar Start-->
-        <nav class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark">
-            <section class="container">
-                <!-- LOGO -->
-                <a class="logo text-uppercase text-primary" href="#home">
-                    Christian Pecson
+    <!-- Hero section Start -->
+    <header class="hero-section" id="home">
+      <section class="container">
+        <section class="row align-items-center justify-content-between">
+          <section class="col-lg-4 col-sm-12">
+            <section class="home-img mx-auto mt-4"></section>
+          </section>
+
+          <section
+            class="col-lg-8 col-sm-12 text-xs-center text-sm-center text-lg-left d-flex justify-content-center"
+          >
+            <section class="hero-wrapper mt-4 mb-4">
+              <h1 class="hero-title mb-4">
+                Hi, I'm <span class="text-primary">Christian!</span>
+              </h1>
+              <h3 class="hero-title mb-4">
+                <span class="profession"></span>
+              </h3>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+      </section>
+      <!-- end container -->
+    </header>
+    <!-- Hero section End -->
+
+    <!-- Experience start -->
+    <section class="section bg-light" id="experience">
+      <section class="container">
+        <!-- row -->
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <section class="text-center mb-5">
+              <h4 class="mb-3">Experience</h4>
+              <p>Where I work, role and duration</p>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-12 mb-4">
+            <section>
+              <h5>Tawk.to</h5>
+              <p class="mb-0 text-dark">Hybrid Mobile App Developer</p>
+              <p class="mb-4 text-dark">Mar 2022 – Present</p>
+              <section class="row">
+                <section class="col-sm-12 mx-auto text-justify">
+                  <ul>
+                    <li>
+                      Collaborate with the development team to design, code,
+                      test, and implement new features and bug fixes for the
+                      hybrid mobile app.
+                    </li>
+                    <li>
+                      Picking up new tasks assigned by the lead developer and
+                      communicating freely to ensure the requirements are
+                      clearly understood.
+                    </li>
+                    <li>
+                      Code and test solutions that comply with project coding
+                      standards.
+                    </li>
+                    <li>
+                      Commit code to project repositories and create pull
+                      requests when tasks are complete.
+                    </li>
+                    <li>
+                      Respond promptly to pull request reviews and change
+                      requests.
+                    </li>
+                    <li>
+                      Keep project task tracking software up to date with
+                      progress.
+                    </li>
+                  </ul>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-12 mb-4">
+            <section>
+              <h5>Ahsay</h5>
+              <p class="mb-0 text-dark">Hybrid Mobile App Developer</p>
+              <p class="mb-4 text-dark">Sep 2021 – Feb 2022 (6 months)</p>
+              <section class="row">
+                <section class="col-sm-12 mx-auto text-justify">
+                  <ul>
+                    <li>
+                      Involve throughout mobile application development
+                      lifecycle, from design, develop testing and release
+                    </li>
+                    <li>
+                      Maintain, add new features, debug and keep application
+                      up-to-date
+                    </li>
+                    <li>Update development documents</li>
+                    <li>
+                      Work closely with programmers and designer to constantly
+                      innovate app functionality and design
+                    </li>
+                  </ul>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-12 mb-4">
+            <section>
+              <h5>Corebridge</h5>
+              <p class="mb-0 text-dark">Frontend Developer</p>
+              <p class="mb-4 text-dark">Jan 2021 – Dec 2021 (1 year)</p>
+
+              <section class="row">
+                <section class="col-sm-12 mx-auto text-justify">
+                  <ul>
+                    <li class="pb-1">
+                      Create highly interactive web applications using Angular,
+                      JavaScript (and TypeScript), HTML5, etc.
+                    </li>
+                    <li class="pb-1">
+                      Work in a team with other developers, UX designers, and QA
+                      to create user interfaces for web and mobile applications.
+                    </li>
+                    <li class="pb-1">
+                      Utilize ticket tracking, repository, and GIT-based source
+                      code synchronization.
+                    </li>
+                    <li class="pb-1">
+                      Check and follow up with daily updates and tasks.
+                    </li>
+                    <li class="pb-1">
+                      Assist the support team with problem identification and
+                      bug fixes.
+                    </li>
+                    <li class="pb-1">
+                      Research and learn new technologies to aid and assist the
+                      development team.
+                    </li>
+                  </ul>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-12 mb-4">
+            <section>
+              <h5>Upwork</h5>
+              <p class="mb-0 text-dark">
+                Freelance Hybrid Mobile App Developer
+              </p>
+              <p class="mb-4 text-dark">Jan 2020 – Dec 2021 (1 year)</p>
+
+              <section class="row">
+                <section class="col-sm-12 mx-auto text-justify">
+                  <ul>
+                    <li class="pb-1">
+                      Support the entire application life-cycle (concept,
+                      design, test, release and support)
+                    </li>
+                    <li class="pb-1">
+                      Produce fully functional mobile applications by writing
+                      clean code
+                    </li>
+                    <li class="pb-1">
+                      Gather specific requirements and suggest solutions
+                    </li>
+                    <li class="pb-1">
+                      Troubleshoot and debug to optimize performance
+                    </li>
+                    <li class="pb-1">
+                      Design interfaces to improve user experience
+                    </li>
+                    <li class="pb-1">
+                      Ensure mobile applications meet quality standards
+                    </li>
+                  </ul>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-12 mb-4">
+            <section>
+              <h5>ProximaX</h5>
+              <p class="mb-0 text-dark">Software developer</p>
+              <p class="mb-4 text-dark">
+                Oct 2018 – Jan 2020 (1 year and 4 months)
+              </p>
+
+              <section class="row">
+                <section class="col-sm-12 mx-auto text-justify">
+                  <ul>
+                    <li class="pb-1">
+                      Develop software solutions by studying information needs;
+                      conferring with users; studying systems flow, data usage
+                      and work processes; investigating problem areas; following
+                      the software development lifecycle
+                    </li>
+                    <li class="pb-1">
+                      Determine operational feasibility by evaluating analysis,
+                      problem definition, requirements, solution development and
+                      proposed solutions
+                    </li>
+                    <li class="pb-1">
+                      Document and demonstrate solutions by developing
+                      documentation, flowcharts, layouts, diagrams, charts, code
+                      comments and clear code
+                    </li>
+                    <li class="pb-1">
+                      Prepare and install solutions by determining and designing
+                      system specifications, standards and programming
+                    </li>
+                    <li class="pb-1">
+                      Improve operations by conducting systems analysis;
+                      recommending changes in policies and procedures
+                    </li>
+                    <li class="pb-1">
+                      Protect operations by keeping information confidential
+                    </li>
+                    <li class="pb-1">
+                      Provide information by collecting, analyzing and
+                      summarizing development and service issues
+                    </li>
+                    <li class="pb-1">
+                      Support and develop software engineers by providing
+                      advice, coaching and educational opportunities
+                    </li>
+                    <li class="pb-1">Mentor junior and mid-level engineers</li>
+                    <li class="pb-1">
+                      Collaborate with team to brainstorm and create new
+                      products
+                    </li>
+                    <li class="pb-1">
+                      Make informed decisions quickly and taking ownership of
+                      services and applications at scale
+                    </li>
+                    <li class="pb-1">
+                      Work collaboratively with others to achieve goals
+                    </li>
+                    <li class="pb-1">
+                      Be a persistent, creative problem solver
+                    </li>
+                    <li class="pb-1">Remain cool and effective in a crisis</li>
+                    <li class="pb-1">
+                      Stay on the leading edge of development practices
+                    </li>
+                    <li class="pb-1">
+                      Passionate about great technologies, especially open
+                      source
+                    </li>
+                    <li class="pb-1">
+                      Understand business needs and know how to create the tools
+                      to manage them
+                    </li>
+                    <li class="pb-1">
+                      Comply with company instructions to use the required daily
+                      timesheet recording application
+                    </li>
+                  </ul>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-12 mb-4">
+            <section>
+              <h5>Dragonfly Fintech</h5>
+              <p class="mb-0 text-dark">Software developer</p>
+              <p class="mb-4 text-dark">Jun 2018 – Sep 2018 (4 months)</p>
+
+              <section class="row">
+                <section class="col-sm-12 mx-auto text-justify">
+                  <ul>
+                    <li class="pb-1">
+                      Write and maintain features of mobile wallet with Angular
+                      and Ionic Framework
+                    </li>
+                    <li class="pb-1">
+                      Converting flowchart into code in the mobile wallet
+                    </li>
+                    <li class="pb-1">Write and maintain code for OTP server</li>
+                    <li class="pb-1">
+                      Stay on the leading edge of development practices
+                    </li>
+                    <li class="pb-1">
+                      Passionate about great technologies, especially open
+                      source
+                    </li>
+                    <li class="pb-1">
+                      Understand business needs and know how to create the tools
+                      to manage them
+                    </li>
+                    <li class="pb-1">
+                      Comply with company instructions to use the required daily
+                      timesheet recording application
+                    </li>
+                  </ul>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+      </section>
+      <!-- end container -->
+    </section>
+    <!-- Experience end -->
+
+    <!-- Skills start -->
+    <section class="section" id="skills">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <section class="text-center mb-5">
+              <h4 class="mb-3">Skills</h4>
+              <p>Skills, level of proficiency and application</p>
+            </section>
+          </section>
+        </section>
+        <section class="row">
+          <!-- git -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-git-plain text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">Git</h5>
+              <ul class="text-left">
+                <li>Track and review changes</li>
+                <li>Push and pull in the repo</li>
+              </ul>
+            </section>
+          </section>
+          <!-- ebd git -->
+
+          <!-- html -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-html5-plain text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">HTML</h5>
+              <ul class="text-left">
+                <li>Document creation</li>
+                <li>Usage of semantic tags for clarity</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end html -->
+
+          <!-- css -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-html5-plain text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">CSS</h5>
+              <ul class="text-left">
+                <li>Multiple device compatibility</li>
+                <li>Manage styles of a page</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end css -->
+
+          <!-- sass -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-sass-original text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">Sass</h5>
+              <ul class="text-left">
+                <li>Variables for theme customization</li>
+                <li>Functions for utility</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end sass -->
+
+          <!-- javascript -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-javascript-plain text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">Javacript</h5>
+              <ul class="text-left">
+                <li>Make a page interactive</li>
+                <li>Usage of AJAX for http requests</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end javascript -->
+
+          <!-- angular -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <ion-icon
+                    name="logo-angular"
+                    class="text-primary font-24"
+                  ></ion-icon>
+                </span>
+              </section>
+              <h5 class="font-18">Angular</h5>
+              <ul class="text-left">
+                <li>MVC for better maintenance</li>
+                <li>Used in web development</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end angular -->
+
+          <!-- ionic -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <ion-icon
+                    name="logo-ionic"
+                    class="text-primary font-24"
+                  ></ion-icon>
+                </span>
+              </section>
+              <h5 class="font-18">Ionic</h5>
+              <ul class="text-left">
+                <li>Mobile development for iOS and Android</li>
+                <li>Usage of cordova to access device APIs</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end ionic -->
+
+          <!-- nodejs -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-nodejs-plain text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">Node JS</h5>
+              <ul class="text-left">
+                <li>Used for creating microservices</li>
+                <li>Used for creating authentication and APIs</li>
+              </ul>
+
+              <section class="text-left ml-4">
+                <h6 class="font-16">Frameworks</h6>
+                <ul>
+                  <li>Strapi</li>
+                  <li>Nest js</li>
+                  <li>Sails.js</li>
+                </ul>
+              </section>
+            </section>
+          </section>
+          <!-- end nodejs -->
+
+          <!-- docker -->
+          <section class="col-xl-4 col-sm-6">
+            <section class="text-center p-4 mt-3">
+              <section class="avatar-md mx-auto mb-4">
+                <span class="avatar-title rounded-circle bg-soft-primary">
+                  <i class="devicon-docker-plain text-primary font-24"></i>
+                </span>
+              </section>
+              <h5 class="font-18">Docker</h5>
+              <ul class="text-left">
+                <li>Used for deployment of nodejs apps with containers</li>
+                <li>Used for management of containers</li>
+              </ul>
+            </section>
+          </section>
+          <!-- end docker -->
+        </section>
+        <!-- end container -->
+      </section>
+    </section>
+    <!-- Services end -->
+
+    <!-- Projects start -->
+    <section class="section bg-light" id="projects">
+      <section class="container">
+        <!-- Projects title -->
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <section class="text-center mb-5">
+              <h4 class="mb-3">Projects</h4>
+            </section>
+          </section>
+        </section>
+        <!-- end Projects title -->
+
+        <!-- PayLuy wallet -->
+        <div
+          class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse"
+        >
+          <div class="col-lg-6 col-sm-12">
+            <div>
+              <h5>PayLuy Wallet</h5>
+              <p class="mb-0">Sept 2018 – Jun 2020</p>
+              <p class="mb-2">
+                Payluy is the next generation mobile wallet system, built using
+                blockchain technology. Send money to anyone in Cambodia, pay
+                anywhere & to anyone, pay your bills on-time, top up your mobile
+                number, and shop online, just using your phone. Now, you can
+                perform any payments, anywhere, anytime, and it is safe &
+                convenient.
+              </p>
+              <h6>Features</h6>
+              <ul class="mb-2">
+                <li>
+                  Send money to other Payluy user with zero fee charge, anywhere
+                  in Cambodia.
+                </li>
+                <li>Send money from Payluy user to non-Payluy user</li>
+                <li>Receive money from other Payluy user</li>
+                <li>
+                  Top-up phone easily with any amount using Payluy. Never run
+                  out of credits anymore.
+                </li>
+                <li>
+                  Make bill payments directly using phone via Payluy, with just
+                  a click of button.
+                </li>
+                <li>
+                  Pay easily using QR Code Payment with Payluy’s partner
+                  merchants using the app. No physical cash or cards required.
+                </li>
+                <li>
+                  Buy credits/diamonds for games like PUBG, Mobile Legends,
+                  Rules of Survival and many more using Payluy. You don’t even
+                  need a credit card anymore!
+                </li>
+              </ul>
+              <h6 class="mt-2">Individual Contributions</h6>
+              <ul class="mb-2">
+                <li>
+                  Worked as a mid-level dev in a team of 15 that consists of a
+                  tech lead, junior devs, and QA testers.
+                </li>
+                <li>
+                  Implemented Register and Login UI into functional Ionic app.
+                </li>
+                <li>Implemented transaction history with offline support.</li>
+                <li>Implemented transfer transaction.</li>
+                <li>Deployed in Google Play Store with 100k+ downloads.</li>
+              </ul>
+              <h6>Technologies Used</h6>
+              <ul>
+                <li>Git</li>
+                <li>Angular 9</li>
+                <li>CSS</li>
+                <li>Sass</li>
+                <li>Typescript</li>
+                <li>Firebase</li>
+                <li>NestJS</li>
+                <li>Docker</li>
+                <li>Blockchain</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
+            <div class="card border border-light shadow-sm mt-lg-0">
+              <div class="card-header border-0 bg-transparent">
+                <div>
+                  <ion-icon name="ellipse" class="text-danger mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-warning mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-success mr-1"></ion-icon>
+                </div>
+              </div>
+              <div class="card-body bg-light text-center">
+                <div
+                  id="payluyCarouselControls"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/payluy/payluy-1.webp"
+                        alt="First slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/payluy/payluy-2.webp"
+                        alt="Second slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/payluy/payluy-3.webp"
+                        alt="Third slide"
+                      />
+                    </div>
+                  </div>
+                  <a
+                    class="carousel-control-prev"
+                    href="#payluyCarouselControls"
+                    role="button"
+                    data-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#payluyCarouselControls"
+                    role="button"
+                    data-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end: PayLuy wallet -->
+
+        <!-- Proximax wallet -->
+        <div
+          class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse"
+        >
+          <div class="col-lg-6 col-sm-12">
+            <div>
+              <h5>ProximaX Wallet V1</h5>
+              <p class="mb-0">Oct 2018 – Jan 2020</p>
+              <p class="mb-2">
+                The ProximaX Wallet app enables to manage multiple ProximaX
+                accounts on your phone. Send and receive XPX and messages. Using
+                QR codes, it is even faster and easier than with a desktop
+                client.
+              </p>
+              <h6>Features</h6>
+              <ul class="mb-2">
+                <li>
+                  All private keys and other important data stored locally and
+                  encrypted.
+                </li>
+                <li>Generate, import and export ProximaX accounts</li>
+                <li>Multisignature contract edits and account management</li>
+                <li>Managing multiple accounts and local address books</li>
+                <li>Displaying account information</li>
+                <li>
+                  Displaying recent transactions on an interactive messaging
+                  interface
+                </li>
+                <li>Encrypted and plain text messaging</li>
+                <li>Signing multisignature transactions</li>
+                <li>
+                  No blockchain download. The ProximaX app is a lite client
+                  using NEM’s APIs.
+                </li>
+                <li>Reading and making NEM addresses with QR codes</li>
+                <li>Shows XEM Harvesting status and details.</li>
+                <li>
+                  No in-app purchases, advertisements, or sharing of data. Your
+                  privacy is fully respected.
+                </li>
+              </ul>
+              <h6 class="mt-2">Individual Contributions</h6>
+              <ul class="mb-2">
+                <li>
+                  Worked as a mid-level dev in a team of 10 that consists of a
+                  tech lead, junior devs, and QA testers.
+                </li>
+                <li>
+                  Implemented the verification of a one-time password with phone
+                  number and email in 1 month.
+                </li>
+                <li>Implemented the sending crypto assets in 2 weeks.</li>
+                <li>Deployment in Google Play and Apple Store in 3 weeks.</li>
+              </ul>
+              <h6>Technologies Used</h6>
+              <ul>
+                <li>Git</li>
+                <li>Angular 9</li>
+                <li>CSS</li>
+                <li>Sass</li>
+                <li>Typescript</li>
+                <li>Sails.js</li>
+                <li>Nodejs v10</li>
+                <li>Firebase</li>
+                <li>Blockchain</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
+            <div class="card border border-light shadow-sm mt-lg-0">
+              <div class="card-header border-0 bg-transparent">
+                <div>
+                  <ion-icon name="ellipse" class="text-danger mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-warning mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-success mr-1"></ion-icon>
+                </div>
+              </div>
+              <div class="card-body bg-light text-center">
+                <img
+                  class="lazyload rounded img-fluid mx-auto d-block"
+                  alt="ProximaX Wallet V1"
+                  data-src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/proximax/proximax-wallet-v1.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end: Proximax wallet -->
+
+        <!-- Proximax Forensics -->
+        <div
+          class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse"
+        >
+          <div class="col-lg-6 col-sm-12">
+            <div>
+              <h5>ProximaX Forensics</h5>
+              <p class="mb-0">Sept 2018 – Dec 2018</p>
+              <p class="mb-2">
+                ProximaX Forensics is designed to bring about greater
+                efficiencies and data security, thus enabling investigators and
+                scientists to access digital evidence easily, quickly and also
+                store digital evidence securely.
+              </p>
+              <h6 class="mt-2">Individual Contributions</h6>
+              <ul class="mb-2">
+                <li>
+                  Worked as a mid-level dev in a team of 8 that consists of a
+                  tech lead, junior devs, and QA testers.
+                </li>
+                <li>Implemented UI from scratch into functional Ionic app.</li>
+                <li>Implemented saving of data in MongoDB.</li>
+                <li>Deployed in Google Play Store with 100k+ downloads.</li>
+              </ul>
+              <h6>Technologies Used</h6>
+              <ul>
+                <li>Git</li>
+                <li>Angular 9</li>
+                <li>CSS</li>
+                <li>Sass</li>
+                <li>Typescript</li>
+                <li>MongoDB</li>
+              </ul>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://www.proximax.ltd/en/products#Applications"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Project
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary"
+                  ></ion-icon>
                 </a>
+              </p>
+            </div>
+          </div>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <ion-icon name="menu"></ion-icon>
-                </button>
-                <section class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
-                        <li class="nav-item active">
-                            <a href="#home" class="nav-link">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#experience" class="nav-link">Experience</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#skills" class="nav-link">Skills</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#projects" class="nav-link">Projects</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#certificates" class="nav-link">Certificates</a>
-                        </li>
-                    </ul>
-                </section>
+          <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
+            <div class="card border border-light shadow-sm mt-lg-0">
+              <div class="card-header border-0 bg-transparent">
+                <div>
+                  <ion-icon name="ellipse" class="text-danger mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-warning mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-success mr-1"></ion-icon>
+                </div>
+              </div>
+              <div class="card-body bg-light text-center">
+                <img
+                  class="lazyload rounded img-fluid mx-auto d-block"
+                  alt="ProximaX Forensics"
+                  data-src="https://www.proximax.ltd/en/images/proximax/proximax-forensics.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end: Proximax Forensics -->
+
+        <!-- MECO PH -->
+        <div
+          class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse"
+        >
+          <div class="col-lg-6 col-sm-12">
+            <div>
+              <h5>Meco PH</h5>
+              <p class="mb-0">Sept 2018 – Oct 2018</p>
+              <p class="mb-2">
+                MECO Ph is the official mobile application of the Manila
+                Economic and Cultural Office, the Philippine Representative
+                Office in Taiwan. Subscribe to receive news updates and official
+                announcements, book appointments for passport transactions,
+                apply for travel authority and check passport release schedule.
+              </p>
+              <h6 class="mt-2">Individual Contributions</h6>
+              <ul class="mb-2">
+                <li>
+                  Worked in a team of 4 that consists of a product owner, 2
+                  devs, and 1 QA tester.
+                </li>
+                <li>
+                  Implemented mockup from scratch into a functional Ionic app.
+                </li>
+                <li>Preparation of assets for Google Play Store deployment.</li>
+                <li>Deployed in Google Play Store with 100k+ downloads.</li>
+              </ul>
+              <h6>Technologies Used</h6>
+              <ul>
+                <li>Git</li>
+                <li>Angular 5</li>
+                <li>CSS</li>
+                <li>Sass</li>
+                <li>Typescript</li>
+              </ul>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://play.google.com/store/apps/details?id=com.tw_meco"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Project
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary"
+                  ></ion-icon>
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
+            <div class="card border border-light shadow-sm mt-lg-0">
+              <div class="card-header border-0 bg-transparent">
+                <div>
+                  <ion-icon name="ellipse" class="text-danger mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-warning mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-success mr-1"></ion-icon>
+                </div>
+              </div>
+              <div class="card-body bg-light text-center">
+                <div
+                  id="mecoCarouselControls"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meco/meco-1.png"
+                        alt="First slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meco/meco-2.png"
+                        alt="Second slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meco/meco-3.png"
+                        alt="Third slide"
+                      />
+                    </div>
+                  </div>
+                  <a
+                    class="carousel-control-prev"
+                    href="#mecoCarouselControls"
+                    role="button"
+                    data-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#mecoCarouselControls"
+                    role="button"
+                    data-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end: MECO PH -->
+
+        <!-- EON Travel -->
+        <section class="row">
+          <section class="col-lg-6 col-sm-12">
+            <section>
+              <h5>EON Travel App</h5>
+              <p class="mb-0">Feb 2018 – Mar 2018</p>
+              <p class="mb-0">
+                EON Travel App is a marketplace where you can get travel
+                packages & holiday deals by your one and only trusted travel
+                agency – AEON Travel & Tours across the world. You may enquire
+                about a trip package or search for the perfect travel vacation
+                deals at the best prices. Detailed itineraries will help you
+                find out best places to visit.
+              </p>
+              <h6 class="mt-2">Individual Contributions</h6>
+              <ul class="mb-2">
+                <li>
+                  Worked in a team of 4 that consists of a product owner, 2
+                  devs, and 1 QA tester.
+                </li>
+                <li>
+                  Implemented mockup from scratch into functional Ionic app.
+                </li>
+                <li>
+                  Implemented dashboard from scratch to handle payment and
+                  bookings.
+                </li>
+                <li>Prepared assets for deployment in Google Play Store.</li>
+              </ul>
+              <h6>Technologies Used</h6>
+              <ul>
+                <li>Git</li>
+                <li>Angular 5</li>
+                <li>CSS</li>
+                <li>Sass</li>
+                <li>Typescript</li>
+                <li>Firebase</li>
+              </ul>
             </section>
-        </nav>
-        <!-- Navbar End -->
-        
-        <!-- Hero section Start -->
-        <header class="hero-section" id="home">
-            <section class="container">
-                <section class="row align-items-center justify-content-between">
-                    <section class="col-lg-4 col-sm-12">
-                        <section class="home-img shadow-lg mx-auto mt-4"></section>
-                    </section>
-
-                    <section class="col-lg-8 col-sm-12 text-xs-center text-sm-center text-lg-left d-flex justify-content-center">
-                        <section class="hero-wrapper mt-4 mb-4">
-                            <h1 class="hero-title mb-4">
-                                Hi, I'm <span class="text-primary">Christian!</span>
-                            </h1>
-                            <h3 class="hero-title mb-4">
-                                <span class="profession"></span>
-                            </h3>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-            </section>
-            <!-- end container -->
-        </header>
-        <!-- Hero section End -->
-
-        <!-- Experience start -->
-        <section class="section bg-light" id="experience">
-            <section class="container">
-                <!-- row -->
-                <section class="row justify-content-center">
-                    <section class="col-lg-8">
-                        <section class="text-center mb-5">
-                            <h4 class="mb-3">Experience</h4>
-                            <p>Where I work, role and duration</p>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-12 mb-4">
-                        <section>
-                            <h5>Tawk.to</h5>
-                            <p class="mb-0 text-dark">Hybrid Mobile App Developer</p>
-                            <p class="mb-4 text-dark">Mar 2022 – Present</p>
-                            <section class="row">
-                                <section class="col-sm-12 mx-auto text-justify">
-                                    <ul>
-                                        <li>Collaborate with the development team to design, code, test, and implement new features and bug fixes for the hybrid mobile app.</li>
-                                        <li>Picking up new tasks assigned by the lead developer and communicating freely to ensure the requirements are clearly understood.</li>
-                                        <li>Code and test solutions that comply with project coding standards.</li>
-                                        <li>Commit code to project repositories and create pull requests when tasks are complete.</li>
-                                        <li>Respond promptly to pull request reviews and change requests.</li>
-                                        <li>Keep project task tracking software up to date with progress.</li>
-                                    </ul>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-                
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-12 mb-4">
-                        <section>
-                            <h5>Ahsay</h5>
-                            <p class="mb-0 text-dark">Hybrid Mobile App Developer</p>
-                            <p class="mb-4 text-dark">Sep 2021 – Feb 2022 (6 months)</p>
-                            <section class="row">
-                                <section class="col-sm-12 mx-auto text-justify">
-                                    <ul>
-                                        <li>Involve throughout mobile application development lifecycle, from design, develop testing and release</li>
-                                        <li>Maintain, add new features, debug and keep application up-to-date</li>
-                                        <li>Update development documents</li>
-                                        <li>Work closely with programmers and designer to constantly innovate app functionality and design</li>
-                                    </ul>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-12 mb-4">
-                        <section>
-                            <h5>Corebridge</h5>
-                            <p class="mb-0 text-dark">Frontend Developer</p>
-                            <p class="mb-4 text-dark">Jan 2021 – Dec 2021 (1 year)</p>
-
-                            <section class="row">
-                                <section class="col-sm-12 mx-auto text-justify">
-                                    <ul>
-                                        <li class="pb-1">Create highly interactive web applications using Angular, JavaScript (and TypeScript), HTML5, etc.</li>
-                                        <li class="pb-1">Work in a team with other developers, UX designers, and QA to create user interfaces for web and mobile applications.</li>
-                                        <li class="pb-1">Utilize ticket tracking, repository, and GIT-based source code synchronization.</li>
-                                        <li class="pb-1">Check and follow up with daily updates and tasks.</li>
-                                        <li class="pb-1">Assist the support team with problem identification and bug fixes.</li>
-                                        <li class="pb-1">Research and learn new technologies to aid and assist the development team.</li>
-                                    </ul>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-12 mb-4">
-                        <section>
-                            <h5>Upwork</h5>
-                            <p class="mb-0 text-dark">Freelance Hybrid Mobile App Developer</p>
-                            <p class="mb-4 text-dark">Jan 2020 – Dec 2021 (1 year)</p>
-
-                            <section class="row">
-                                <section class="col-sm-12 mx-auto text-justify">
-                                    <ul>
-                                        <li class="pb-1">Support the entire application life-cycle (concept, design, test, release and support)</li>
-                                        <li class="pb-1">Produce fully functional mobile applications by writing clean code</li>
-                                        <li class="pb-1">Gather specific requirements and suggest solutions</li>
-                                        <li class="pb-1">Troubleshoot and debug to optimize performance</li>
-                                        <li class="pb-1">Design interfaces to improve user experience</li>
-                                        <li class="pb-1">Ensure mobile applications meet quality standards</li>
-                                    </ul>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-12 mb-4">
-                        <section>
-                            <h5>ProximaX</h5>
-                            <p class="mb-0 text-dark">Software developer</p>
-                            <p class="mb-4 text-dark">Oct 2018 – Jan 2020 (1 year and 4 months)</p>
-
-                            <section class="row">
-                                <section class="col-sm-12 mx-auto text-justify">
-                                    <ul>
-                                        <li class="pb-1">Develop software solutions by studying information needs; conferring with users; studying systems flow, data usage and work processes; investigating problem areas; following the software development lifecycle</li>
-                                        <li class="pb-1">Determine operational feasibility by evaluating analysis, problem definition, requirements, solution development and proposed solutions</li>
-                                        <li class="pb-1">Document and demonstrate solutions by developing documentation, flowcharts, layouts, diagrams, charts, code comments and clear code</li>
-                                        <li class="pb-1">Prepare and install solutions by determining and designing system specifications, standards and programming</li>
-                                        <li class="pb-1">Improve operations by conducting systems analysis; recommending changes in policies and procedures</li>
-                                        <li class="pb-1">Protect operations by keeping information confidential</li>
-                                        <li class="pb-1">Provide information by collecting, analyzing and summarizing development and service issues</li>
-                                        <li class="pb-1">Support and develop software engineers by providing advice, coaching and educational opportunities</li>
-                                        <li class="pb-1">Mentor junior and mid-level engineers</li>
-                                        <li class="pb-1">Collaborate with team to brainstorm and create new products</li>
-                                        <li class="pb-1">Make informed decisions quickly and taking ownership of services and applications at scale</li>
-                                        <li class="pb-1">Work collaboratively with others to achieve goals</li>
-                                        <li class="pb-1">Be a persistent, creative problem solver</li>
-                                        <li class="pb-1">Remain cool and effective in a crisis</li>
-                                        <li class="pb-1">Stay on the leading edge of development practices</li>
-                                        <li class="pb-1">Passionate about great technologies, especially open source</li>
-                                        <li class="pb-1">Understand business needs and know how to create the tools to manage them</li>
-                                        <li class="pb-1">Comply with company instructions to use the required daily timesheet recording application</li>
-                                    </ul>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-12 mb-4">
-                        <section>
-                            <h5>Dragonfly Fintech</h5>
-                            <p class="mb-0 text-dark">Software developer</p>
-                            <p class="mb-4 text-dark">Jun 2018 – Sep 2018 (4 months)</p>
-
-                            <section class="row">
-                                <section class="col-sm-12 mx-auto text-justify">
-                                    <ul>
-                                        <li class="pb-1">Write and maintain features of mobile wallet with Angular and Ionic Framework</li>
-                                        <li class="pb-1">Converting flowchart into code in the mobile wallet</li>
-                                        <li class="pb-1">Write and maintain code for OTP server</li>
-                                        <li class="pb-1">Stay on the leading edge of development practices</li>
-                                        <li class="pb-1">Passionate about great technologies, especially open source</li>
-                                        <li class="pb-1">Understand business needs and know how to create the tools to manage them</li>
-                                        <li class="pb-1">Comply with company instructions to use the required daily timesheet recording application</li>
-                                    </ul>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-            </section>
-            <!-- end container -->
+          </section>
+          <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
+            <div class="card border border-light shadow-sm mt-lg-0">
+              <div class="card-header border-0 bg-transparent">
+                <div>
+                  <ion-icon name="ellipse" class="text-danger mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-warning mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-success mr-1"></ion-icon>
+                </div>
+              </div>
+              <div class="card-body bg-light text-center">
+                <img
+                  class="lazyload rounded img-fluid mx-auto d-block"
+                  alt="EON Travel App"
+                  data-src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/eon/eon.jpg"
+                />
+              </div>
+            </div>
+          </div>
         </section>
-        <!-- Experience end -->
+        <!-- end EON Travel -->
 
-        <!-- Skills start -->
-        <section class="section" id="skills">
-            <section class="container">
-                <section class="row justify-content-center">
-                    <section class="col-lg-8">
-                        <section class="text-center mb-5">
-                            <h4 class="mb-3">Skills</h4>
-                            <p>Skills, level of proficiency and application</p>
-                        </section>
-                    </section>
-                </section>
-                <section class="row">
-                    <!-- git -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-git-plain text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Git</h5>
-                            <ul class="text-left">
-                                <li>Track and review changes</li>
-                                <li>Push and pull in the repo</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- ebd git -->
+        <!-- Heineken -->
+        <div
+          class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse"
+        >
+          <div class="col-lg-6 col-sm-12">
+            <div>
+              <h5>The Heineken Draught Challenge</h5>
+              <p class="mb-0">Aug 2017 – Nov 2017</p>
+              <p class="mb-0">
+                The Heineken Star Serve Draught Challenge is a gamified training
+                tool to help bartenders serve Heineken draught according to the
+                5 Heineken Star Serve Steps. The app contains training movies
+                and a competition/judging tool and is a fun and interactive
+                competition where bartenders battle head to head to find the
+                best bartender in town. Ask your Heineken representative when
+                this tool comes available for your bar.
+              </p>
+              <h6 class="mt-2">Individual Contributions</h6>
+              <ul class="mb-2">
+                <li>
+                  Worked in a team of 4 that consists of a product owner, 2
+                  devs, and 1 QA tester.
+                </li>
+                <li>
+                  Implemented mockup from scratch into a functional Ionic app in
+                  2 weeks.
+                </li>
+                <li>
+                  Preparation of assets for Google Play Store deployment in 2
+                  days.
+                </li>
+                <li>Deployed in Google Play Store with 1000+ downloads.</li>
+              </ul>
+              <h6>Technologies Used</h6>
+              <ul>
+                <li>Git</li>
+                <li>Angular 5</li>
+                <li>CSS</li>
+                <li>Sass</li>
+                <li>Typescript</li>
+                <li>Firebase</li>
+              </ul>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://play.google.com/store/apps/details?id=com.p4d.app"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Project
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary"
+                  ></ion-icon>
+                </a>
+              </p>
+            </div>
+          </div>
 
-                    <!-- html -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-html5-plain text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">HTML</h5>
-                            <ul class="text-left">
-                                <li>Document creation</li>
-                                <li>Usage of semantic tags for clarity</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end html -->
+          <div class="col-lg-4 col-sm-8 offset-sm-2">
+            <div class="card border border-light shadow-sm mt-lg-0">
+              <div class="card-header border-0 bg-transparent">
+                <div>
+                  <ion-icon name="ellipse" class="text-danger mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-warning mr-1"></ion-icon>
+                  <ion-icon name="ellipse" class="text-success mr-1"></ion-icon>
+                </div>
+              </div>
+              <div class="card-body bg-light text-center">
+                <!-- <img class="lazyload rounded img-fluid mx-auto d-block" alt="The Heineken Draught Challenge" data-src="https://lh3.googleusercontent.com/nbjZlO_jCgVI3wjut_Aizl1kbWovzw_aPd-rp15gfACYkGB9pCBs5J1Y66-5by2lpZMW"> -->
+                <div
+                  id="heinekenCarouselControls"
+                  class="carousel slide"
+                  data-ride="carousel"
+                >
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/heineken/heineken-1.webp"
+                        alt="First slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/heineken/heineken-2.webp"
+                        alt="Second slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/heineken/heineken-3.webp"
+                        alt="Third slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/heineken/heineken-4.webp"
+                        alt="Third slide"
+                      />
+                    </div>
+                    <div class="carousel-item">
+                      <img
+                        class="d-block w-100"
+                        src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/heineken/heineken-6.webp"
+                        alt="Third slide"
+                      />
+                    </div>
+                  </div>
+                  <a
+                    class="carousel-control-prev"
+                    href="#heinekenCarouselControls"
+                    role="button"
+                    data-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#heinekenCarouselControls"
+                    role="button"
+                    data-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end Heineken -->
+      </section>
+      <!-- end container -->
+    </section>
+    <!-- Projects end -->
 
-                    <!-- css -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-html5-plain text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">CSS</h5>
-                            <ul class="text-left">
-                                <li>Multiple device compatibility</li>
-                                <li>Manage styles of a page</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end css -->
-
-                    <!-- sass -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-sass-original text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Sass</h5>
-                            <ul class="text-left">
-                                <li>Variables for theme customization</li>
-                                <li>Functions for utility</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end sass -->
-
-                    <!-- javascript -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-javascript-plain text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Javacript</h5>
-                            <ul class="text-left">
-                                <li>Make a page interactive</li>
-                                <li>Usage of AJAX for http requests</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end javascript -->
-
-                    <!-- angular -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <ion-icon name="logo-angular" class="text-primary font-24"></ion-icon>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Angular</h5>
-                            <ul class="text-left">
-                                <li>MVC for better maintenance</li>
-                                <li>Used in web development</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end angular -->
-
-                    <!-- ionic -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <ion-icon name="logo-ionic" class="text-primary font-24"></ion-icon>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Ionic</h5>
-                            <ul class="text-left">
-                                <li>Mobile development for iOS and Android</li>
-                                <li>Usage of cordova to access device APIs</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end ionic -->
-
-                    <!-- nodejs -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-nodejs-plain text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Node JS</h5>
-                            <ul class="text-left">
-                                <li>Used for creating microservices</li>
-                                <li>Used for creating authentication and APIs</li>
-                            </ul>
-
-                            <section class="text-left ml-4">
-                                <h6 class="font-16">Frameworks</h6>
-                                <ul>
-                                    <li>Strapi</li>
-                                    <li>Nest js</li>
-                                    <li>Sails.js</li>
-                                </ul>
-                            </section>
-
-                        </section>
-                    </section>
-                    <!-- end nodejs -->
-
-                    <!-- docker -->
-                    <section class="col-xl-4 col-sm-6">
-                        <section class="text-center p-4 mt-3">
-                            <section class="avatar-md mx-auto mb-4">
-                                <span class="avatar-title rounded-circle bg-soft-primary">
-                                    <i class="devicon-docker-plain text-primary font-24"></i>
-                                </span>
-                            </section>
-                            <h5 class="font-18">Docker</h5>
-                            <ul class="text-left">
-                                <li>Used for deployment of nodejs apps with containers</li>
-                                <li>Used for management of containers</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <!-- end docker -->
-                </section>
-            <!-- end container -->
+    <!-- Certificates start -->
+    <section class="section" id="certificates">
+      <section class="container">
+        <!-- row -->
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <section class="text-center mb-5">
+              <h4 class="mb-3">Certificates</h4>
             </section>
+          </section>
         </section>
-        <!-- Services end -->
+        <!-- end row -->
 
-        <!-- Projects start -->
-        <section class="section bg-light" id="projects">
-            <section class="container">
-                <!-- Projects title -->
-                <section class="row justify-content-center">
-                    <section class="col-lg-8">
-                        <section class="text-center mb-5">
-                            <h4 class="mb-3">Projects</h4>
-                        </section>
-                    </section>
-                </section>
-                <!-- end Projects title -->
-
-                <!-- PayLuy wallet -->
-                <div class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse">
-                    <div class="col-lg-6 col-sm-12">
-                        <div>
-                            <h5>PayLuy Wallet</h5>
-                            <p class="mb-0">Sept 2018 – Jun 2020</p>
-                            <p class="mb-2">Payluy is the next generation mobile wallet system, built using blockchain technology. Send money to anyone in Cambodia, pay anywhere & to anyone, pay your bills on-time, top up your mobile number, and shop online, just using your phone. Now, you can perform any payments, anywhere, anytime, and it is safe & convenient.
-                            </p>
-                            <h6>Features</h6>
-                            <ul class="mb-2">
-                                <li>Send money to other Payluy user with zero fee charge, anywhere in Cambodia.</li>
-                                <li>Send money from Payluy user to non-Payluy user</li>
-                                <li>Receive money from other Payluy user</li>
-                                <li>Top-up phone easily with any amount using Payluy. Never run out of credits anymore.</li>
-                                <li>Make bill payments directly using phone via Payluy, with just a click of button.</li>
-                                <li>Pay easily using QR Code Payment with Payluy’s partner merchants using the app. No physical cash or cards required.</li>
-                                <li>Buy credits/diamonds for games like PUBG, Mobile Legends, Rules of Survival and many more using Payluy. You don’t even need a credit card anymore!</li>
-
-                            </ul>
-                            <h6 class="mt-2">Individual Contributions</h6>
-                            <ul class="mb-2">
-                                <li>Worked as a mid-level dev in a team of 15 that consists of a tech lead, junior devs, and QA testers.</li>
-                                <li>Implemented Register and Login UI into functional Ionic app.</li>
-                                <li>Implemented transaction history with offline support.</li>
-                                <li>Implemented transfer transaction.</li>
-                                <li>Deployed in Google Play Store with 100k+ downloads.</li>
-                            </ul>
-                            <h6>Technologies Used</h6>
-                            <ul>
-                                <li>Git</li>
-                                <li>Angular 9</li>
-                                <li>CSS</li>
-                                <li>Sass</li>
-                                <li>Typescript</li>
-                                <li>Firebase</li>
-                                <li>NestJS</li>
-                                <li>Docker</li>
-                                <li>Blockchain</li>
-                            </ul>
-                            <p>
-                                <a class="text-primary" href="https://play.google.com/store/apps/details?id=app.payluy.wallet" target="_blank" rel="noreferrer">
-                                    See Project
-                                    <ion-icon name="open-outline" class="icon-dual-primary"></ion-icon>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
-                        <div class="card border border-light shadow-sm mt-lg-0">
-                            <div class="card-header border-0 bg-transparent">
-                                <div>
-                                    <ion-icon name="ellipse" class="text-danger mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-warning mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-success mr-1""></ion-icon>
-                                </div>
-                            </div>
-                            <div class="card-body bg-light text-center">
-                                <img class="lazyload rounded img-fluid mx-auto d-block" alt="PayLuy Wallet" data-src="https://play-lh.googleusercontent.com/bbqc0cglWN9XAa7SsCWHWl04cE2tyPNd21vJRPeNXO2KQdRVOg-tZFcp3Ozxqdo-P1s">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end: PayLuy wallet -->
-
-                <!-- Proximax wallet -->
-                <div class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse">
-                    <div class="col-lg-6 col-sm-12">
-                        <div>
-                            <h5>ProximaX Wallet V1</h5>
-                            <p class="mb-0">Oct 2018 – Jan 2020</p>
-                            <p class="mb-2">The ProximaX Wallet app enables to manage multiple ProximaX accounts on your phone. Send and receive XPX and messages. Using QR codes, it is even faster and easier than with a desktop client.</p>
-                            <h6>Features</h6>
-                            <ul class="mb-2">
-                                <li>All private keys and other important data stored locally and encrypted.</li>
-                                <li>Generate, import and export ProximaX accounts</li>
-                                <li>Multisignature contract edits and account management</li>
-                                <li>Managing multiple accounts and local address books</li>
-                                <li>Displaying account information</li>
-                                <li>Displaying recent transactions on an interactive messaging interface</li>
-                                <li>Encrypted and plain text messaging</li>
-                                <li>Signing multisignature transactions</li>
-                                <li>No blockchain download. The ProximaX app is a lite client using NEM’s APIs.</li>
-                                <li>Reading and making NEM addresses with QR codes</li>
-                                <li>Shows XEM Harvesting status and details.</li>
-                                <li>No in-app purchases, advertisements, or sharing of data. Your privacy is fully respected.</li>
-                            </ul>
-                            <h6 class="mt-2">Individual Contributions</h6>
-                            <ul class="mb-2">
-                                <li>Worked as a mid-level dev in a team of 10 that consists of a tech lead, junior devs, and QA testers.</li>
-                                <li>Implemented the verification of a one-time password with phone number and email in 1 month.</li>
-                                <li>Implemented the sending crypto assets in 2 weeks.</li>
-                                <li>Deployment in Google Play and Apple Store in 3 weeks.</li>
-                            </ul>
-                            <h6>Technologies Used</h6>
-                            <ul>
-                                <li>Git</li>
-                                <li>Angular 9</li>
-                                <li>CSS</li>
-                                <li>Sass</li>
-                                <li>Typescript</li>
-                                <li>Sails.js</li>
-                                <li>Nodejs v10</li>
-                                <li>Firebase</li>
-                                <li>Blockchain</li>
-                            </ul>
-                            <p>
-                                <a class="text-primary" href="https://play.google.com/store/apps/details?id=io.proxima.wallet" target="_blank" rel="noreferrer">
-                                    See Project
-                                    <ion-icon name="open-outline" class="icon-dual-primary"></ion-icon>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
-                        <div class="card border border-light shadow-sm mt-lg-0">
-                            <div class="card-header border-0 bg-transparent">
-                                <div>
-                                    <ion-icon name="ellipse" class="text-danger mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-warning mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-success mr-1""></ion-icon>
-                                </div>
-                            </div>
-                            <div class="card-body bg-light text-center">
-                                <img class="lazyload rounded img-fluid mx-auto d-block" alt="ProximaX Wallet V1" data-src="https://lh3.googleusercontent.com/A5WqLhRkwrk1id0i_3YgtvTRKxKfqh1E3xnG0Gw_G72ThsyohqexKMcdCFNrsDSHpUl2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end: Proximax wallet -->
-
-                <!-- Proximax Forensics -->
-                <div class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse">
-                    <div class="col-lg-6 col-sm-12">
-                        <div>
-                            <h5>ProximaX Forensics</h5>
-                            <p class="mb-0">Sept 2018 – Dec 2018</p>
-                            <p class="mb-2">ProximaX Forensics is designed to bring about greater efficiencies and data security, thus enabling investigators and scientists to access digital evidence easily, quickly and also store digital evidence securely.</p>
-                            <h6 class="mt-2">Individual Contributions</h6>
-                            <ul class="mb-2">
-                                <li>Worked as a mid-level dev in a team of 8 that consists of a tech lead, junior devs, and QA testers.</li>
-                                <li>Implemented UI from scratch into functional Ionic app.</li>
-                                <li>Implemented saving of data in MongoDB.</li>
-                                <li>Deployed in Google Play Store with 100k+ downloads.</li>
-                            </ul>
-                            <h6>Technologies Used</h6>
-                            <ul>
-                                <li>Git</li>
-                                <li>Angular 9</li>
-                                <li>CSS</li>
-                                <li>Sass</li>
-                                <li>Typescript</li>
-                                <li>MongoDB</li>
-                            </ul>
-                            <p>
-                                <a class="text-primary" href="https://www.proximax.ltd/en/products#Applications" target="_blank" rel="noreferrer">
-                                    See Project
-                                    <ion-icon name="open-outline" class="icon-dual-primary"></ion-icon>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
-                        <div class="card border border-light shadow-sm mt-lg-0">
-                            <div class="card-header border-0 bg-transparent">
-                                <div>
-                                    <ion-icon name="ellipse" class="text-danger mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-warning mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-success mr-1""></ion-icon>
-                                </div>
-                            </div>
-                            <div class="card-body bg-light text-center">
-                                <img class="lazyload rounded img-fluid mx-auto d-block" alt="ProximaX Forensics" data-src="https://www.proximax.ltd/en/images/apps-proximax-forensics.png">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end: Proximax Forensics -->
-
-                <!-- MECO PH -->
-                <div class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse">
-                    <div class="col-lg-6 col-sm-12">
-                        <div>
-                            <h5>Meco PH</h5>
-                            <p class="mb-0">Sept 2018 – Oct 2018</p>
-                            <p class="mb-2">
-                                MECO Ph is the official mobile application of the Manila Economic and Cultural Office, the Philippine Representative Office in Taiwan. Subscribe to receive news updates and official announcements, book appointments for passport transactions, apply for travel authority and check passport release schedule.
-                            </p>
-                            <h6 class="mt-2">Individual Contributions</h6>
-                            <ul class="mb-2">
-                                <li>Worked in a team of 4 that consists of a product owner, 2 devs, and 1 QA tester.</li>
-                                <li>Implemented mockup from scratch into a functional Ionic app.</li>
-                                <li>Preparation of assets for Google Play Store deployment.</li>
-                                <li>Deployed in Google Play Store with 100k+ downloads.</li>
-                            </ul>
-                            <h6>Technologies Used</h6>
-                            <ul>
-                                <li>Git</li>
-                                <li>Angular 5</li>
-                                <li>CSS</li>
-                                <li>Sass</li>
-                                <li>Typescript</li>
-                            </ul>
-                            <p>
-                                <a class="text-primary" href="https://play.google.com/store/apps/details?id=com.tw_meco" target="_blank" rel="noreferrer">
-                                    See Project
-                                    <ion-icon name="open-outline" class="icon-dual-primary"></ion-icon>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
-                        <div class="card border border-light shadow-sm mt-lg-0">
-                            <div class="card-header border-0 bg-transparent">
-                                <div>
-                                    <ion-icon name="ellipse" class="text-danger mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-warning mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-success mr-1""></ion-icon>
-                                </div>
-                            </div>
-                            <div class="card-body bg-light text-center">
-                                <img class="lazyload rounded img-fluid mx-auto d-block" alt="ProximaX Wallet V1" data-src="https://lh3.googleusercontent.com/gonPpSICh9rUgCQexlPlaqpJ_kvvo3pwyW_RyqnBIwVwV62adZflnIUg-zTVWamqBAc">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end: MECO PH -->
-
-                <!-- EON Travel -->
-                <section class="row">
-                    <section class="col-lg-6 col-sm-12">
-                        <section>
-                            <h5>EON Travel App</h5>
-                            <p class="mb-0">Feb 2018 – Mar 2018</p>
-                            <p class="mb-0">EON Travel App is a marketplace where you can get travel packages & holiday deals by your one and only trusted travel agency – AEON Travel & Tours across the world. You may enquire about a trip package or search for the perfect travel vacation deals at the best prices. Detailed itineraries will help you find out best places to visit.</p>
-                            <h6 class="mt-2">Individual Contributions</h6>
-                            <ul class="mb-2">
-                                <li>Worked in a team of 4 that consists of a product owner, 2 devs, and 1 QA tester.</li>
-                                <li>Implemented mockup from scratch into functional Ionic app.</li>
-                                <li>Implemented dashboard from scratch to handle payment and bookings.</li>
-                                <li>Prepared assets for deployment in Google Play Store.</li>
-                            </ul>
-                            <h6>Technologies Used</h6>
-                            <ul>
-                                <li>Git</li>
-                                <li>Angular 5</li>
-                                <li>CSS</li>
-                                <li>Sass</li>
-                                <li>Typescript</li>
-                                <li>Firebase</li>
-                            </ul>
-                        </section>
-                    </section>
-                    <div class="col-lg-4 ml-lg-auto col-sm-8 offset-sm-2">
-                        <div class="card border border-light shadow-sm mt-lg-0">
-                            <div class="card-header border-0 bg-transparent">
-                                <div>
-                                    <ion-icon name="ellipse" class="text-danger mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-warning mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-success mr-1""></ion-icon>
-                                </div>
-                            </div>
-                            <div class="card-body bg-light text-center">
-                                <img class="lazyload rounded img-fluid mx-auto d-block" alt="EON Travel App" data-src="https://res.cloudinary.com/chpecson/image/upload/q_70/v1645408884/chpecson.dev/eon.jpg">
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- end EON Travel -->
-
-                <!-- Heineken -->
-                <div class="row my-5 flex-lg-row flex-sm-column-reverse flex-column-reverse">
-                    <div class="col-lg-6 col-sm-12">
-                        <div>
-                            <h5>The Heineken Draught Challenge</h5>
-                            <p class="mb-0">Aug 2017 – Nov 2017</p>
-                            <p class="mb-0">The Heineken Star Serve Draught Challenge is a gamified training tool to help bartenders serve Heineken draught according to the 5 Heineken Star Serve Steps. The app contains training movies and a competition/judging tool and is a fun and interactive competition where bartenders battle head to head to find the best bartender in town. Ask your Heineken representative when this tool comes available for your bar.</p>
-                            <h6 class="mt-2">Individual Contributions</h6>
-                            <ul class="mb-2">
-                                <li>Worked in a team of 4 that consists of a product owner, 2 devs, and 1 QA tester.</li>
-                                <li>Implemented mockup from scratch into a functional Ionic app in 2 weeks.</li>
-                                <li>Preparation of assets for Google Play Store deployment in 2 days.</li>
-                                <li>Deployed in Google Play Store with 1000+ downloads.</li>
-                            </ul>
-                            <h6>Technologies Used</h6>
-                            <ul>
-                                <li>Git</li>
-                                <li>Angular 5</li>
-                                <li>CSS</li>
-                                <li>Sass</li>
-                                <li>Typescript</li>
-                                <li>Firebase</li>
-                            </ul>
-                            <p>
-                                <a class="text-primary" href="https://play.google.com/store/apps/details?id=com.p4d.app" target="_blank" rel="noreferrer">
-                                    See Project
-                                    <ion-icon name="open-outline" class="icon-dual-primary"></ion-icon>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-8 offset-sm-2">
-                        <div class="card border border-light shadow-sm mt-lg-0">
-                            <div class="card-header border-0 bg-transparent">
-                                <div>
-                                    <ion-icon name="ellipse" class="text-danger mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-warning mr-1""></ion-icon>
-                                    <ion-icon name="ellipse" class="text-success mr-1""></ion-icon>
-                                </div>
-                            </div>
-                            <div class="card-body bg-light text-center">
-                                <img class="lazyload rounded img-fluid mx-auto d-block" alt="The Heineken Draught Challenge" data-src="https://lh3.googleusercontent.com/nbjZlO_jCgVI3wjut_Aizl1kbWovzw_aPd-rp15gfACYkGB9pCBs5J1Y66-5by2lpZMW">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end Heineken -->
-
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-6 col-12 mb-4">
+            <section>
+              <h5>Certificate of Completion: Angular Bootcamp</h5>
+              <p class="mb-0">Issued February 2021</p>
+              <p>
+                <a
+                  class="text-primary"
+                  href="http://bit.ly/chris-abc-cert"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Credential
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary font-20"
+                  ></ion-icon>
+                </a>
+              </p>
             </section>
-            <!-- end container -->
+          </section>
+
+          <section class="col-lg-6 col-12 mb-4">
+            <section>
+              <h5>
+                JavaScript Algorithms and Data Structures Developer
+                Certification - freeCodeCamp
+              </h5>
+              <p class="mb-0">Issued July 2018</p>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://www.freecodecamp.org/certification/chpecson/javascript-algorithms-and-data-structures"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Credential
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary font-20"
+                  ></ion-icon>
+                </a>
+              </p>
+            </section>
+          </section>
         </section>
-        <!-- Projects end -->
+        <!-- end row -->
 
-        <!-- Certificates start -->
-        <section class="section" id="certificates">
-            <section class="container">
-                <!-- row -->
-                <section class="row justify-content-center">
-                    <section class="col-lg-8">
-                        <section class="text-center mb-5">
-                            <h4 class="mb-3">Certificates</h4>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-6 col-12 mb-4">
-                        <section>
-                            <h5>Certificate of Completion: Angular Bootcamp</h5>
-                            <p class="mb-0">Issued February 2021</p>
-                            <p>
-                                <a class="text-primary" href="http://bit.ly/chris-abc-cert" target="_blank" rel="noreferrer">
-                                    See Credential
-                                    <ion-icon name="open-outline" class="icon-dual-primary font-20"></ion-icon>
-                                </a>
-                            </p>
-                        </section>
-                    </section>
-
-                    <section class="col-lg-6 col-12 mb-4">
-                        <section>
-                            <h5>JavaScript Algorithms and Data Structures Developer Certification - freeCodeCamp</h5>
-                            <p class="mb-0">Issued July 2018</p>
-                            <p>
-                                <a class="text-primary" href="https://www.freecodecamp.org/certification/chpecson/javascript-algorithms-and-data-structures" target="_blank" rel="noreferrer">
-                                    See Credential
-                                    <ion-icon name="open-outline" class="icon-dual-primary font-20"></ion-icon>
-                                </a>
-                            </p>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-6 col-12 mb-4">
-                        <section>
-                            <h5>Certificate of Completion: HTML Fundamentals - SoloLearn</h5>
-                            <p class="mb-0">Issued March 2016</p>
-                            <p class="mb-0">Credential ID 1014-911252</p>
-                            <p>
-                                <a class="text-primary" href="https://www.sololearn.com/Certificate/1014-911252/jpg" target="_blank" rel="noreferrer">
-                                    See Credential
-                                    <ion-icon name="open-outline" class="icon-dual-primary font-20"></ion-icon>
-                                </a>
-                            </p>
-                        </section>
-                    </section>
-
-                    <section class="col-lg-6 col-12 mb-4">
-                        <section>
-                            <h5>Certificate of Completion: CSS Fundamentals - SoloLearn</h5>
-                            <p class="mb-0">Issued March 2016</p>
-                            <p class="mb-0">Credential ID 1023-911252</p>
-                            <p>
-                                <a class="text-primary" href="https://www.sololearn.com/Certificate/1023-911252/jpg" target="_blank" rel="noreferrer">
-                                    See Credential
-                                    <ion-icon name="open-outline" class="icon-dual-primary font-20"></ion-icon>
-                                </a>
-                            </p>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
-                <!-- row -->
-                <section class="row">
-                    <section class="col-lg-6 col-12 mb-4">
-                        <section>
-                            <h5>Certificate of Completion: JavaScript Fundamentals - SoloLearn</h5>
-                            <p class="mb-0">Issued March 2016</p>
-                            <p class="mb-0">Credential ID 1024-911252</p>
-                            <p>
-                                <a class="text-primary" href="https://www.sololearn.com/Certificate/1024-911252/jpg" target="_blank" rel="noreferrer">
-                                    See Credential
-                                    <ion-icon name="open-outline" class="icon-dual-primary font-20"></ion-icon>
-                                </a>
-                            </p>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
-
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-6 col-12 mb-4">
+            <section>
+              <h5>Certificate of Completion: HTML Fundamentals - SoloLearn</h5>
+              <p class="mb-0">Issued March 2016</p>
+              <p class="mb-0">Credential ID 1014-911252</p>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://www.sololearn.com/Certificate/1014-911252/jpg"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Credential
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary font-20"
+                  ></ion-icon>
+                </a>
+              </p>
             </section>
-            <!-- end container -->
+          </section>
+
+          <section class="col-lg-6 col-12 mb-4">
+            <section>
+              <h5>Certificate of Completion: CSS Fundamentals - SoloLearn</h5>
+              <p class="mb-0">Issued March 2016</p>
+              <p class="mb-0">Credential ID 1023-911252</p>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://www.sololearn.com/Certificate/1023-911252/jpg"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Credential
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary font-20"
+                  ></ion-icon>
+                </a>
+              </p>
+            </section>
+          </section>
         </section>
-        <!-- Certificates end -->
+        <!-- end row -->
 
-        <!-- Footer start -->
-        <footer class="footer">
-            <section class="container">
-                <section class="row">
-                    <section class="col-12">
-                        <section>
-                            <h5 class="mb-4 footer-list-title">Contact</h5>
-
-                            <section>
-                                <section class="media">
-                                    <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i> 
-                                    <section class="media-body">
-                                        <p>
-                                            <a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a>
-                                        </p>
-                                    </section>
-                                </section>
-                                <section class="media">
-                                    <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i> 
-                                    <section class="media-body">
-                                        <p>
-                                            <a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a>
-                                        </p>
-                                    </section>
-                                </section>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-                <!-- end row -->
+        <!-- row -->
+        <section class="row">
+          <section class="col-lg-6 col-12 mb-4">
+            <section>
+              <h5>
+                Certificate of Completion: JavaScript Fundamentals - SoloLearn
+              </h5>
+              <p class="mb-0">Issued March 2016</p>
+              <p class="mb-0">Credential ID 1024-911252</p>
+              <p>
+                <a
+                  class="text-primary"
+                  href="https://www.sololearn.com/Certificate/1024-911252/jpg"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  See Credential
+                  <ion-icon
+                    name="open-outline"
+                    class="icon-dual-primary font-20"
+                  ></ion-icon>
+                </a>
+              </p>
             </section>
-            <!-- end container -->
-            
-        </footer>
-        <!-- Footer end -->
+          </section>
+        </section>
+        <!-- end row -->
+      </section>
+      <!-- end container -->
+    </section>
+    <!-- Certificates end -->
 
-        <!-- Javascript -->
-        <!-- Global site tag - Umami Analytics -->
-        <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <!-- Footer start -->
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
 
-        <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.0/lazysizes.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
-        <script src="js/scrollspy.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+              <section>
+                <section class="media">
+                  <i
+                    data-feather="github"
+                    class="icon-dual-light mt-1 mr-2"
+                  ></i>
+                  <section class="media-body">
+                    <p>
+                      <a
+                        href="https://github.com/chpecson"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="text-light"
+                        >Github</a
+                      >
+                    </p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i
+                    data-feather="linkedin"
+                    class="icon-dual-light mt-1 mr-2"
+                  ></i>
+                  <section class="media-body">
+                    <p>
+                      <a
+                        href="https://www.linkedin.com/in/chpecson"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="text-light"
+                        >LinkedIn</a
+                      >
+                    </p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+        <!-- end row -->
+      </section>
+      <!-- end container -->
+    </footer>
+    <!-- Footer end -->
 
-        <!-- app js -->
-        <script src="js/app.js"></script>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">...</div>
+        </div>
+      </div>
+    </div>
 
-    </body>
+    <!-- Javascript -->
+    <!-- Global site tag - Umami Analytics -->
+    <script
+      defer
+      src="https://analytics.eu.umami.is/script.js"
+      data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"
+    ></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.0/lazysizes.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
+    <script src="js/scrollspy.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+    <!-- app js -->
+    <script src="js/app.js"></script>
+  </body>
 </html>

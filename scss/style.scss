@@ -472,71 +472,6 @@ $value in $colors {
 }
 
 
-
-/******************
-    5.Testimonial
-*******************/
-
-.testi-carousel {
-
-    .owl-nav {
-        position: absolute;
-        top: -67px;
-        right: 0;
-        margin-top: 0px;
-
-        button {
-            outline: 0;
-            border-radius: 50% !important;
-
-            span {
-                display: inline-block;
-                width: 32px;
-                height: 32px;
-                line-height: 32px;
-                background: rgba($primary, 0.2);
-                color: $primary;
-                border-radius: 50%;
-                font-size: 20px;
-            }
-
-            &:hover {
-
-                span {
-                    background: $primary;
-                    color: $white;
-                }
-            }
-        }
-    }
-
-
-    .owl-item {
-        padding: 0px 10px;
-    }
-
-    .owl-dots {
-        .owl-dot {
-            &:focus {
-                outline: 0;
-            }
-
-            span {
-                background: rgba($primary, 0.2);
-                border: 2px solid transparent;
-            }
-
-            &.active,
-            &:hover {
-                span {
-                    background: $white;
-                    border: 2px solid $primary;
-                }
-            }
-        }
-    }
-}
-
 /********** Clients ***********/
 
 .client-images {
@@ -709,14 +644,5 @@ $value in $colors {
 @media (max-width: 767.98px) {
     .hero-title {
         font-size: 32px;
-    }
-}
-
-@media (max-width: 575.98px) {
-
-    .testi-carousel {
-        .owl-nav {
-            display: none;
-        }
     }
 }

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Why We Migrated from Cordova to Capacitor (And You Should Too) - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Why We Migrated from Cordova to Capacitor (And You Should Too) - Christian Pecson" />
+    <meta name="description" content="A step-by-step walkthrough of migrating a production hybrid app from Cordova to Capacitor, including the gotchas and wins." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/capacitor-vs-cordova-migration.html" />
+    <meta property="og:title" content="Why We Migrated from Cordova to Capacitor (And You Should Too) - Christian Pecson" />
+    <meta property="og:description" content="A step-by-step walkthrough of migrating a production hybrid app from Cordova to Capacitor, including the gotchas and wins." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">Christian Pecson</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item"><a href="../../" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="../" class="nav-link">Blog</a></li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">Mobile</span>
+              <span class="blog-tag">Capacitor</span>
+            </div>
+            <h1 class="mt-3 mb-3">Why We Migrated from Cordova to Capacitor (And You Should Too)</h1>
+            <p class="post-meta">June 22, 2024 &middot; 9 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>Our main mobile app at Tawk.to had been running on Cordova since before I joined the team. It worked, but every time we needed to update a native plugin or deal with a platform-specific quirk, it felt like we were fighting the tooling instead of building features. After evaluating Capacitor for a few weeks, we decided to make the switch. Six months later, I can say it was one of the best infrastructure decisions we have made. Here is how we did it and what we learned along the way.</p>
+
+            <h2>Why Cordova Was Holding Us Back</h2>
+
+            <p>Cordova served us well for years, but several pain points had been accumulating. Plugin management was fragile. Updating one plugin would often break another because of conflicting native dependencies. The build process felt opaque; when something went wrong in the native layer, debugging meant digging through generated code that was not meant to be edited. And the community had clearly shifted its energy toward Capacitor, which meant fewer updates and slower bug fixes for Cordova plugins.</p>
+
+            <p>The breaking point came when we needed to support iOS 17's new privacy manifests. The Cordova ecosystem was slow to adapt, and we found ourselves manually patching plugins to add the required declarations. That was when we committed to migrating.</p>
+
+            <h2>The Migration Process</h2>
+
+            <p>The Ionic team has a migration guide, but real-world migrations always have more nuance. Here are the actual steps we followed:</p>
+
+<pre><code># Step 1: Install Capacitor in the existing project
+npm install @capacitor/core @capacitor/cli
+
+# Step 2: Initialize Capacitor
+npx cap init "Tawk.to" "com.tawkto.app" --web-dir www
+
+# Step 3: Add platforms
+npx cap add ios
+npx cap add android
+
+# Step 4: Build your web app and sync
+ionic build --prod
+npx cap sync
+</code></pre>
+
+            <p>The key difference from Cordova is that Capacitor checks the native project files (the <code>ios</code> and <code>android</code> directories) into version control. This felt wrong at first, coming from Cordova where the platform directories were generated and gitignored. But it turned out to be a huge advantage. You can open the native project in Xcode or Android Studio and make changes directly, without worrying about them being overwritten by a build step.</p>
+
+            <h2>Plugin Migration: The Biggest Effort</h2>
+
+            <p>This was the most time-consuming part of the migration. We had 14 Cordova plugins, and each one needed to be replaced with a Capacitor equivalent. Some had direct replacements:</p>
+
+<pre><code>// Before (Cordova)
+declare var cordova: any;
+cordova.plugins.notification.local.schedule({
+  title: 'New message',
+  text: 'You have a new chat message',
+  foreground: true
+});
+
+// After (Capacitor)
+import { LocalNotifications } from '@capacitor/local-notifications';
+
+await LocalNotifications.schedule({
+  notifications: [{
+    title: 'New message',
+    body: 'You have a new chat message',
+    id: Date.now(),
+    schedule: { at: new Date() }
+  }]
+});
+</code></pre>
+
+            <p>The Capacitor API is TypeScript-first, which means you get autocomplete and type checking. No more guessing plugin APIs or consulting outdated documentation. For three of our plugins, there was no direct Capacitor equivalent, and we had to write custom Capacitor plugins. This sounds intimidating, but the plugin development experience is significantly better than Cordova. You write native Swift or Kotlin code with clear bridge methods, and the tooling generates the TypeScript interface for you.</p>
+
+            <h2>Native Bridge Improvements</h2>
+
+            <p>One of the things that impressed me most about Capacitor is how it handles the native bridge. In Cordova, communication between the web layer and native code goes through a string-based message queue that can become a bottleneck during rapid calls. Capacitor uses a more direct bridge that serializes data as JSON and passes it through a faster channel.</p>
+
+            <p>In our chat app, where we make frequent calls to the native layer for things like push notifications and local storage, we measured a roughly 30 percent reduction in bridge call latency after the migration. This might not matter for apps that rarely call native APIs, but for our use case it was noticeable.</p>
+
+            <h2>Live Reload and Developer Experience</h2>
+
+            <p>Capacitor's live reload is substantially better than Cordova's. With Cordova, we had a custom script that watched for file changes and triggered a rebuild. With Capacitor, it is built in:</p>
+
+<pre><code># Run with live reload on a connected device
+ionic cap run ios --livereload --external
+
+# Or for Android
+ionic cap run android --livereload --external
+</code></pre>
+
+            <p>Changes to your web code are reflected on the device in about one to two seconds. This alone has improved our development velocity. No more waiting for full rebuilds to test a CSS change.</p>
+
+            <h2>Gotchas and Lessons Learned</h2>
+
+            <p>The migration was not entirely smooth. A few things caught us off guard. First, Capacitor serves your app from an HTTPS origin by default, while Cordova uses a custom scheme. This broke some of our API calls that had hardcoded HTTP origins. Second, file paths work differently between the two. Capacitor uses a different scheme for accessing local files, so any code that constructed file URIs needed updating. Third, some Cordova plugins store data in locations that Capacitor plugins do not automatically read from, so we had to write a one-time migration script to move user preferences from the old storage location to the new one.</p>
+
+            <p>Despite these bumps, the migration took about three weeks for two developers, and the result has been a more maintainable, more performant, and more enjoyable codebase. If your team is still on Cordova, I would strongly recommend setting aside the time to migrate. The Capacitor ecosystem is where the community and the tooling are heading, and the developer experience improvement alone justifies the effort.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a></p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a></p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

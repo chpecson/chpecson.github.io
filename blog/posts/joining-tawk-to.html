@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New Chapter: Joining Tawk.to as a Hybrid Mobile Developer - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="New Chapter: Joining Tawk.to as a Hybrid Mobile Developer - Christian Pecson" />
+    <meta name="description" content="Reflections on starting a new role, what drew me to Tawk.to, and what I'm excited to build with their mobile team." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/joining-tawk-to.html" />
+    <meta property="og:title" content="New Chapter: Joining Tawk.to as a Hybrid Mobile Developer - Christian Pecson" />
+    <meta property="og:description" content="Reflections on starting a new role, what drew me to Tawk.to, and what I'm excited to build with their mobile team." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">Christian Pecson</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item"><a href="../../" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="../" class="nav-link">Blog</a></li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">JavaScript</span>
+              <span class="blog-tag">Career</span>
+            </div>
+            <h1 class="mt-3 mb-3">New Chapter: Joining Tawk.to as a Hybrid Mobile Developer</h1>
+            <p class="post-meta">April 3, 2022 &middot; 5 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>I am excited to share that I have recently joined Tawk.to as a Hybrid Mobile Developer. It is a role that aligns perfectly with my background in Ionic and Angular, and I could not be more enthusiastic about what lies ahead. I wanted to take a moment to reflect on this transition, what drew me to the company, and what I am looking forward to building.</p>
+
+            <h2>Why Tawk.to</h2>
+
+            <p>For those who are not familiar, Tawk.to is a live chat platform used by millions of businesses worldwide. What makes it unique is that it offers its core product completely free, with a business model built around optional add-on services rather than tiered pricing. When I first learned about this approach, it resonated with me. There is something compelling about a company that gives away a genuinely useful product and trusts that the value will come back in other ways.</p>
+
+            <p>From a technical perspective, what drew me in was the scale and the challenge. Tawk.to handles an enormous volume of real-time chat traffic across web widgets, desktop applications, and mobile apps. The mobile app, which is what I will be working on, is built with Ionic and Angular and serves as the primary interface for agents who manage customer conversations on the go. The performance requirements are serious: messages need to appear instantly, the app needs to work reliably on everything from flagship phones to budget Android devices, and offline support is not optional.</p>
+
+            <h2>The Team and Culture</h2>
+
+            <p>One thing that stood out to me during the interview process was the team culture. Tawk.to is a fully remote company with team members distributed across the world. During my conversations with the team, I got a genuine sense that people cared about the product and about each other. There was no corporate posturing, no buzzword-heavy pitch about the company vision. Just thoughtful people building something useful and doing it well.</p>
+
+            <p>The engineering culture is pragmatic. They value shipping over theorizing, but not at the expense of code quality. Pull requests get thorough reviews, technical debt is tracked and addressed, and there is a healthy respect for doing things right rather than just doing them fast. As someone who has worked in environments where speed was the only metric that mattered, this balance is refreshing.</p>
+
+            <h2>The Tech Stack</h2>
+
+            <p>The mobile app is built with Ionic and Angular, which is exactly my sweet spot. I have been working with this stack for years, and I know its strengths and limitations intimately. The app uses Capacitor for native functionality, which I have experience with from previous projects. On the backend side, the team uses Node.js with a real-time architecture built on WebSockets. Even though my primary focus will be on the mobile frontend, having a Node.js backend means the entire stack is JavaScript, which makes it easier to understand the full picture.</p>
+
+            <p>There are also some interesting technical challenges on the horizon. The team is evaluating a migration to standalone Angular components, exploring Signals for state management, and looking at ways to improve offline-first capabilities. These are exactly the kinds of problems I enjoy working on: not greenfield projects where you get to make all the choices from scratch, but mature products where you have to balance innovation with stability.</p>
+
+            <h2>What I Am Looking Forward To</h2>
+
+            <p>More than anything, I am looking forward to working on a product that people use every day to run their businesses. There is a directness to that which is motivating. When I improve the chat interface's performance, real agents will have a smoother experience helping real customers. When I fix a notification bug, someone will not miss an important message from a client. The feedback loop between the code I write and the impact it has is short and tangible.</p>
+
+            <p>I am also looking forward to growing as an engineer. Working on a product at this scale will push me to think about problems I have not encountered before: aggressive caching strategies, graceful degradation on unreliable networks, performance optimization for devices I have never tested on. These are the challenges that make you better.</p>
+
+            <p>To anyone considering a similar career move: look for a team that values what you already know while pushing you to learn what you do not. Look for a product with real users and real problems. And look for a culture where people are kind and the work matters. I am grateful to have found all three at Tawk.to, and I cannot wait to see where this chapter leads.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a></p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a></p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

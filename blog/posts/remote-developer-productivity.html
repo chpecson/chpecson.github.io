@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staying Productive as a Remote Developer - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Staying Productive as a Remote Developer - Christian Pecson" />
+    <meta name="description" content="After years of remote work at Tawk.to, here are the habits, tools, and routines that keep me shipping consistently." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/remote-developer-productivity.html" />
+    <meta property="og:title" content="Staying Productive as a Remote Developer - Christian Pecson" />
+    <meta property="og:description" content="After years of remote work at Tawk.to, here are the habits, tools, and routines that keep me shipping consistently." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">Christian Pecson</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item"><a href="../../" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="../" class="nav-link">Blog</a></li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">Career</span>
+              <span class="blog-tag">Remote Work</span>
+            </div>
+            <h1 class="mt-3 mb-3">Staying Productive as a Remote Developer</h1>
+            <p class="post-meta">March 10, 2023 &middot; 7 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>Working remotely as a developer sounds ideal on paper. No commute, flexible hours, comfortable environment. And it is great, most of the time. But after working remotely at Tawk.to for over a year, I have learned that remote work requires deliberate habits to stay productive and avoid the pitfalls that come with working from home. Here is what has worked for me.</p>
+
+            <h2>Async Communication Is a Superpower</h2>
+
+            <p>The biggest mindset shift when going remote is embracing asynchronous communication. In an office, you can tap someone on the shoulder and get an answer in seconds. Remote teams that try to replicate that with constant Slack messages and impromptu video calls end up in a worse place than either extreme. The interruptions fragment your deep work time, and you never fully get the benefit of async either.</p>
+
+            <p>My team at Tawk.to is distributed across multiple time zones. We have learned to write thorough messages that anticipate questions. Instead of sending "hey, quick question about the API," I will write a complete message that includes what I am trying to do, what I have tried, what I think the answer might be, and what specifically I need help with. This means my colleague in a different time zone can read it when they start their day and give me a complete answer without a back-and-forth that spans hours.</p>
+
+            <p>For pull request reviews, I include screenshots of the UI changes, explain the reasoning behind non-obvious decisions, and link to relevant documentation. It takes a few extra minutes to write, but it saves hours of clarification later. I think of every written message as documentation that future team members might also benefit from.</p>
+
+            <h2>Time Management and Deep Work</h2>
+
+            <p>One of the biggest traps of remote work is the feeling that you should always be available. This leads to constant context-switching between Slack, email, and actual coding. I have settled on a schedule that protects my deep work time while staying responsive to the team.</p>
+
+            <p>My mornings are for deep work. I close Slack, put my phone on silent, and focus on the hardest technical task of the day. This is when I write complex features, debug tricky issues, or do architecture work. I check messages briefly at midday, respond to anything urgent, and then either continue deep work or shift to lighter tasks like code reviews and documentation in the afternoon.</p>
+
+            <p>I also batch similar tasks. Instead of doing code reviews as they come in throughout the day, I set aside a block for reviews. Instead of responding to every Slack message as it arrives, I process them in batches every couple of hours. This sounds simple, but it took me months to develop the discipline. The instinct to check every notification is strong.</p>
+
+            <h2>Tooling That Makes a Difference</h2>
+
+            <p>The right tools can significantly reduce friction in remote work. Here are the ones that have made the biggest impact for me:</p>
+
+            <ul>
+              <li><strong>VS Code with Live Share</strong> - When pair programming is needed, Live Share is the closest thing to sitting next to someone. Real-time collaborative editing with shared terminals and debugging sessions.</li>
+              <li><strong>Loom</strong> - Sometimes a two-minute screen recording explains something better than a ten-paragraph message. I use Loom for demos, bug reports, and explaining complex PRs.</li>
+              <li><strong>Linear or GitHub Issues</strong> - A well-maintained issue tracker is the single source of truth for what needs to be done. Without it, remote teams drown in Slack threads trying to figure out priorities.</li>
+              <li><strong>A good mechanical keyboard and monitor</strong> - This might seem trivial, but your physical setup matters. I invested in a standing desk, a 27-inch monitor, and a quality keyboard. You spend 8+ hours a day at this setup; make it comfortable.</li>
+            </ul>
+
+            <h2>Avoiding Burnout</h2>
+
+            <p>The lack of physical boundaries between work and personal life is the biggest risk of remote work. When your office is ten steps from your bedroom, it is easy to "just check one more thing" at 9 PM, or start working before breakfast because the laptop is right there. I have been guilty of both.</p>
+
+            <p>What helped me was establishing hard boundaries. I have a dedicated workspace that I leave at the end of the day. I close my laptop and do not open it again until the next morning. I turned off work notifications on my phone. On weekends, I genuinely do not check Slack or email. This was uncomfortable at first, especially coming from a culture that values always being available, but it is essential for sustainability.</p>
+
+            <p>Exercise has been the other non-negotiable. When you work from home, you can easily go an entire day without leaving the house. I run three times a week and take a walk during lunch. The physical activity is important, but more than that, it creates a transition point in the day. The morning run separates "home time" from "work time" in a way that a commute would.</p>
+
+            <h2>Building Connection Remotely</h2>
+
+            <p>The hardest part of remote work is not the technical challenges. It is the social isolation. In an office, you build relationships through casual conversations, lunches, and the informal interactions that happen naturally. Remote teams have to be intentional about this.</p>
+
+            <p>Our team does a weekly video call that has no agenda. We talk about what we are working on, what is frustrating us, what we are excited about, or just random life stuff. It is not a standup meeting. It is the remote equivalent of the conversations that happen in an office kitchen. It sounds forced, and it felt that way at first, but it has become one of the things I look forward to most each week.</p>
+
+            <p>Remote work is not for everyone, and it is not a perfect arrangement even for those it suits. But with the right habits, tools, and boundaries, it can be a genuinely productive and sustainable way to work. The key is being deliberate about the things that happen automatically in an office. Nothing about remote work just works by default. You have to design it.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a></p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a></p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

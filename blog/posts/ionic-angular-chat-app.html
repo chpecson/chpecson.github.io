@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Building a Real-Time Chat Interface with Ionic and Angular - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Building a Real-Time Chat Interface with Ionic and Angular - Christian Pecson" />
+    <meta name="description" content="A deep dive into building a performant chat UI with virtual scrolling, real-time updates, and offline support in Ionic." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/ionic-angular-chat-app.html" />
+    <meta property="og:title" content="Building a Real-Time Chat Interface with Ionic and Angular - Christian Pecson" />
+    <meta property="og:description" content="A deep dive into building a performant chat UI with virtual scrolling, real-time updates, and offline support in Ionic." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">Christian Pecson</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item"><a href="../../" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="../" class="nav-link">Blog</a></li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">Ionic</span>
+              <span class="blog-tag">Angular</span>
+            </div>
+            <h1 class="mt-3 mb-3">Building a Real-Time Chat Interface with Ionic and Angular</h1>
+            <p class="post-meta">September 25, 2022 &middot; 10 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>Chat interfaces are deceptively complex. On the surface, it is just a list of messages with an input box at the bottom. But once you start building one for production use, you discover a long list of challenges: variable-height messages, smooth scrolling to the bottom on new messages, loading older messages when scrolling up, real-time delivery, typing indicators, read receipts, and offline support. In this post, I want to walk through how I built the chat interface for our Ionic Angular mobile app at Tawk.to.</p>
+
+            <h2>The Message List with Virtual Scrolling</h2>
+
+            <p>The first challenge is rendering the message list efficiently. A busy conversation can have thousands of messages, and rendering all of them as DOM elements would destroy performance on mobile devices. Virtual scrolling is the answer, but chat presents a unique twist: unlike a typical list that scrolls from top to bottom, chat messages are anchored to the bottom. New messages appear at the bottom, and you scroll up to see older ones.</p>
+
+<pre><code>// chat.page.ts
+@Component({
+  selector: 'app-chat',
+  template: `
+    &lt;ion-content #content&gt;
+      &lt;cdk-virtual-scroll-viewport
+        [itemSize]="estimatedItemSize"
+        [minBufferPx]="600"
+        [maxBufferPx]="900"
+        class="message-viewport"&gt;
+
+        &lt;div *cdkVirtualFor="let msg of messages; trackBy: trackByMessageId"
+             class="message-wrapper"
+             [class.own-message]="msg.senderId === currentUserId"&gt;
+          &lt;app-message-bubble
+            [message]="msg"
+            [showAvatar]="shouldShowAvatar(msg)"&gt;
+          &lt;/app-message-bubble&gt;
+        &lt;/div&gt;
+
+      &lt;/cdk-virtual-scroll-viewport&gt;
+    &lt;/ion-content&gt;
+
+    &lt;ion-footer&gt;
+      &lt;app-message-input
+        (messageSent)="onSendMessage($event)"
+        (typing)="onTyping()"&gt;
+      &lt;/app-message-input&gt;
+    &lt;/ion-footer&gt;
+  `
+})
+export class ChatPage implements OnInit, OnDestroy {
+  @ViewChild('content') content: IonContent;
+  messages: ChatMessage[] = [];
+  estimatedItemSize = 72;
+  private destroy$ = new Subject&lt;void&gt;();
+
+  trackByMessageId(index: number, msg: ChatMessage): string {
+    return msg.id;
+  }
+}
+</code></pre>
+
+            <p>The <code>trackBy</code> function is essential. Without it, Angular would re-render every visible message whenever the list changes. With <code>trackBy</code>, it only creates or destroys DOM elements for messages that were actually added or removed. For a chat app receiving frequent updates, this is the difference between smooth operation and visible jank.</p>
+
+            <h2>WebSocket Integration</h2>
+
+            <p>For real-time message delivery, we use WebSockets through a service that manages the connection lifecycle. The key design decisions here are reconnection logic and message buffering:</p>
+
+<pre><code>@Injectable({ providedIn: 'root' })
+export class WebSocketService {
+  private socket: WebSocket;
+  private messages$ = new Subject&lt;WsMessage&gt;();
+  private reconnectAttempts = 0;
+  private maxReconnectAttempts = 10;
+  private messageBuffer: OutgoingMessage[] = [];
+
+  connect(token: string): Observable&lt;WsMessage&gt; {
+    this.socket = new WebSocket(`wss://api.example.com/ws?token=${token}`);
+
+    this.socket.onopen = () =&gt; {
+      this.reconnectAttempts = 0;
+      this.flushBuffer();
+    };
+
+    this.socket.onmessage = (event) =&gt; {
+      const data = JSON.parse(event.data);
+      this.messages$.next(data);
+    };
+
+    this.socket.onclose = (event) =&gt; {
+      if (!event.wasClean &amp;&amp; this.reconnectAttempts &lt; this.maxReconnectAttempts) {
+        const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 30000);
+        setTimeout(() =&gt; {
+          this.reconnectAttempts++;
+          this.connect(token);
+        }, delay);
+      }
+    };
+
+    return this.messages$.asObservable();
+  }
+
+  send(message: OutgoingMessage): void {
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify(message));
+    } else {
+      this.messageBuffer.push(message);
+    }
+  }
+
+  private flushBuffer(): void {
+    while (this.messageBuffer.length &gt; 0) {
+      const msg = this.messageBuffer.shift();
+      this.socket.send(JSON.stringify(msg));
+    }
+  }
+}
+</code></pre>
+
+            <p>The exponential backoff on reconnection prevents hammering the server when there are network issues. The message buffer ensures that messages sent during a brief disconnection are not lost; they are queued and sent as soon as the connection is re-established.</p>
+
+            <h2>Scroll Behavior</h2>
+
+            <p>Getting scroll behavior right in a chat interface is surprisingly tricky. You want to auto-scroll to the bottom when a new message arrives, but only if the user is already at the bottom. If they have scrolled up to read older messages, auto-scrolling would be incredibly annoying:</p>
+
+<pre><code>private isNearBottom = true;
+
+onScroll(event: any): void {
+  const threshold = 150; // pixels from bottom
+  const position = event.target.scrollTop + event.target.clientHeight;
+  const height = event.target.scrollHeight;
+  this.isNearBottom = (height - position) &lt; threshold;
+}
+
+onNewMessage(message: ChatMessage): void {
+  this.messages = [...this.messages, message];
+
+  if (this.isNearBottom || message.senderId === this.currentUserId) {
+    // Use setTimeout to wait for the DOM to update
+    setTimeout(() =&gt; {
+      this.content.scrollToBottom(300); // 300ms smooth scroll
+    });
+  }
+}
+</code></pre>
+
+            <p>Notice the special case: if the current user sent the message, we always scroll to the bottom regardless of their scroll position. Users expect to see the message they just sent.</p>
+
+            <h2>Offline Support</h2>
+
+            <p>For a mobile chat app, offline support is not a nice-to-have; it is a requirement. Users expect to see their conversations even when they are in a subway tunnel or on a plane. We use a combination of Capacitor's storage plugin and a sync queue:</p>
+
+<pre><code>@Injectable({ providedIn: 'root' })
+export class OfflineService {
+  private pendingMessages: PendingMessage[] = [];
+
+  async cacheConversation(convId: string, messages: ChatMessage[]): Promise&lt;void&gt; {
+    await Preferences.set({
+      key: `conversation_${convId}`,
+      value: JSON.stringify(messages)
+    });
+  }
+
+  async getCachedConversation(convId: string): Promise&lt;ChatMessage[]&gt; {
+    const result = await Preferences.get({ key: `conversation_${convId}` });
+    return result.value ? JSON.parse(result.value) : [];
+  }
+
+  queueMessage(message: OutgoingMessage): void {
+    const pending: PendingMessage = {
+      ...message,
+      tempId: `temp_${Date.now()}`,
+      status: 'pending'
+    };
+    this.pendingMessages.push(pending);
+    this.savePendingQueue();
+  }
+
+  async syncPendingMessages(wsService: WebSocketService): Promise&lt;void&gt; {
+    for (const msg of this.pendingMessages) {
+      try {
+        wsService.send(msg);
+        msg.status = 'sent';
+      } catch {
+        msg.status = 'failed';
+      }
+    }
+    this.pendingMessages = this.pendingMessages.filter(m =&gt; m.status === 'failed');
+    this.savePendingQueue();
+  }
+}
+</code></pre>
+
+            <p>When the user sends a message while offline, we immediately add it to the UI with a "pending" status indicator (a small clock icon instead of a checkmark). When the connection is restored, the sync service processes the queue and updates the status. This gives the user instant feedback and a clear indication of what has and has not been delivered.</p>
+
+            <h2>Typing Indicators</h2>
+
+            <p>Typing indicators are a small touch that makes chat feel alive. The implementation is straightforward but needs throttling to avoid flooding the WebSocket connection. We send a "typing" event when the user starts typing and debounce it so we do not send more than one event every two seconds:</p>
+
+<pre><code>private typingSubject = new Subject&lt;void&gt;();
+
+ngOnInit(): void {
+  this.typingSubject.pipe(
+    throttleTime(2000),
+    takeUntil(this.destroy$)
+  ).subscribe(() =&gt; {
+    this.wsService.send({
+      type: 'typing',
+      conversationId: this.conversationId
+    });
+  });
+}
+
+onTyping(): void {
+  this.typingSubject.next();
+}
+</code></pre>
+
+            <p>Building a chat interface taught me more about performance, real-time systems, and mobile UX than any other project I have worked on. Every detail matters when users are staring at the screen waiting for messages to appear. If you are building something similar, I hope these patterns save you some of the trial and error I went through.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a></p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a></p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

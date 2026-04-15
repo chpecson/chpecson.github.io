@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Optimizing Ionic App Performance in 2025 - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Optimizing Ionic App Performance in 2025 - Christian Pecson" />
+    <meta name="description" content="Practical techniques I've used to improve load times, reduce bundle sizes, and deliver smoother experiences in production Ionic apps." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/optimizing-ionic-app-performance.html" />
+    <meta property="og:title" content="Optimizing Ionic App Performance in 2025 - Christian Pecson" />
+    <meta property="og:description" content="Practical techniques I've used to improve load times, reduce bundle sizes, and deliver smoother experiences in production Ionic apps." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <!-- Custom css -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">
+          Christian Pecson
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item">
+              <a href="../../" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a href="../" class="nav-link">Blog</a>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Post Header -->
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">Ionic</span>
+              <span class="blog-tag">Performance</span>
+            </div>
+            <h1 class="mt-3 mb-3">Optimizing Ionic App Performance in 2025</h1>
+            <p class="post-meta">March 15, 2025 &middot; 8 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <!-- Post Content -->
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>After spending the better part of three years building and maintaining production Ionic applications at Tawk.to, I have picked up a handful of performance patterns that have made a real, measurable difference. Ionic has come a long way, but hybrid apps still carry the burden of running inside a WebView, which means every kilobyte and every unnecessary re-render matters more than it does on the open web. In this post I want to share the techniques that have given me the biggest wins.</p>
+
+            <h2>Lazy Loading Done Right</h2>
+
+            <p>Lazy loading is table stakes for any modern Angular app, but I have seen many Ionic projects that only lazy-load at the page level. The real gains come from lazy-loading individual components and, more importantly, heavy third-party libraries. If you only need a charting library on one screen, there is no reason for it to live in your main bundle.</p>
+
+<pre><code>// app-routing.module.ts
+const routes: Routes = [
+  {
+    path: 'dashboard',
+    loadChildren: () =&gt;
+      import('./pages/dashboard/dashboard.module')
+        .then(m =&gt; m.DashboardPageModule)
+  },
+  {
+    path: 'analytics',
+    loadChildren: () =&gt;
+      import('./pages/analytics/analytics.module')
+        .then(m =&gt; m.AnalyticsPageModule)
+  }
+];
+</code></pre>
+
+            <p>The pattern above is standard, but the next step is what most people miss. Inside the analytics module, do not import a heavy charting library at the top of the file. Instead, dynamically import it only when the component initializes:</p>
+
+<pre><code>// analytics.page.ts
+async ngOnInit() {
+  const { Chart } = await import('chart.js/auto');
+  this.chart = new Chart(this.canvasRef.nativeElement, {
+    type: 'line',
+    data: this.chartData
+  });
+}
+</code></pre>
+
+            <p>This alone shaved about 120 KB off our initial bundle in one project. Multiply that across a few heavy dependencies and you start to see serious improvements in time-to-interactive on mid-range Android devices.</p>
+
+            <h2>Virtual Scrolling for Long Lists</h2>
+
+            <p>If your app displays any kind of list with more than a few dozen items, virtual scrolling is non-negotiable. Ionic ships with <code>ion-virtual-scroll</code> (now deprecated in favor of integrating with CDK virtual scroll), but the principle is the same: only render the DOM nodes that are currently visible in the viewport.</p>
+
+<pre><code>&lt;cdk-virtual-scroll-viewport itemSize="72" class="ion-content-scroll-host"&gt;
+  &lt;ion-item *cdkVirtualFor="let message of messages"&gt;
+    &lt;ion-avatar slot="start"&gt;
+      &lt;img [src]="message.avatar" loading="lazy" /&gt;
+    &lt;/ion-avatar&gt;
+    &lt;ion-label&gt;
+      &lt;h3&gt;{{ message.sender }}&lt;/h3&gt;
+      &lt;p&gt;{{ message.preview }}&lt;/p&gt;
+    &lt;/ion-label&gt;
+  &lt;/ion-item&gt;
+&lt;/cdk-virtual-scroll-viewport&gt;
+</code></pre>
+
+            <p>One thing that caught me off guard early on is that virtual scrolling and Ionic's pull-to-refresh do not always play nicely together out of the box. You may need to set up a custom scroll strategy or manually wire the scroll container to <code>ion-content</code>. It is worth the effort though, because rendering 500 chat messages without virtual scrolling will absolutely destroy frame rates on lower-end hardware.</p>
+
+            <h2>Change Detection Strategy</h2>
+
+            <p>Angular's default change detection checks every component in the tree on every event. In an Ionic app running inside a WebView, this is one of the easiest sources of jank. Switching components to <code>OnPush</code> change detection is one of the highest-leverage changes you can make:</p>
+
+<pre><code>@Component({
+  selector: 'app-message-item',
+  templateUrl: './message-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MessageItemComponent {
+  @Input() message: Message;
+}
+</code></pre>
+
+            <p>With <code>OnPush</code>, Angular only checks the component when its inputs change by reference or when an event originates from the component itself. This pairs beautifully with immutable data patterns. In our chat application, moving the message list components to <code>OnPush</code> cut unnecessary change detection cycles by roughly 60 percent during rapid message delivery.</p>
+
+            <h2>Bundle Optimization and Tree Shaking</h2>
+
+            <p>The Angular CLI does a decent job of tree-shaking, but there are a few things you can do to help it along. First, always check your bundle with <code>source-map-explorer</code>:</p>
+
+<pre><code>npm install -g source-map-explorer
+ng build --source-map
+source-map-explorer www/main.*.js
+</code></pre>
+
+            <p>You will almost certainly find surprises. Common culprits include moment.js (replace it with date-fns or dayjs), lodash (use lodash-es and import individual functions), and icon libraries where you import the entire set instead of individual icons. In one audit, switching from the full Ionicons import to individual SVG imports saved us over 200 KB of gzipped JavaScript.</p>
+
+            <h2>Image and Asset Optimization</h2>
+
+            <p>This one seems obvious, but I still see it overlooked. Every image in your Ionic app should use the <code>loading="lazy"</code> attribute at minimum. Beyond that, consider using WebP format with a fallback, and serve responsive image sizes using <code>srcset</code>. For avatars and thumbnails, aggressively resize on the server side rather than shipping full-resolution images to the client.</p>
+
+            <p>Combining all of these techniques, we managed to bring our largest Ionic app's time-to-interactive from over 4 seconds down to about 1.8 seconds on a Moto G Power. Performance is not a one-time fix; it is something you have to measure and maintain with every release. But these patterns have been the foundation of fast Ionic apps for me, and I hope they help you as well.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <!-- Footer start -->
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p>
+                      <a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a>
+                    </p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p>
+                      <a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a>
+                    </p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+    <!-- Footer end -->
+
+    <!-- Javascript -->
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

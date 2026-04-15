@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Building Production APIs with NestJS: Lessons from Real Projects - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Building Production APIs with NestJS: Lessons from Real Projects - Christian Pecson" />
+    <meta name="description" content="How NestJS brings structure to Node.js APIs — modules, dependency injection, and patterns I use in every project." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/building-apis-with-nestjs.html" />
+    <meta property="og:title" content="Building Production APIs with NestJS: Lessons from Real Projects - Christian Pecson" />
+    <meta property="og:description" content="How NestJS brings structure to Node.js APIs — modules, dependency injection, and patterns I use in every project." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">Christian Pecson</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item"><a href="../../" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="../" class="nav-link">Blog</a></li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">Node.js</span>
+              <span class="blog-tag">API</span>
+            </div>
+            <h1 class="mt-3 mb-3">Building Production APIs with NestJS: Lessons from Real Projects</h1>
+            <p class="post-meta">July 18, 2023 &middot; 10 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>As a frontend developer who primarily works with Angular, picking up NestJS felt like coming home. The framework borrows heavily from Angular's architecture: modules, dependency injection, decorators, and a clear separation of concerns. But NestJS applies these patterns to the server side, and after building several production APIs with it, I can say it brings a level of structure to Node.js that I did not know I was missing.</p>
+
+            <h2>Modules: Organizing Your API</h2>
+
+            <p>NestJS modules are the foundation of application organization. Each module encapsulates a set of related controllers, services, and other providers. In a chat application API, you might have a module for users, one for conversations, and one for messages:</p>
+
+<pre><code>// conversations/conversations.module.ts
+@Module({
+  imports: [TypeOrmModule.forFeature([Conversation, Participant])],
+  controllers: [ConversationsController],
+  providers: [ConversationsService, ConversationsGateway],
+  exports: [ConversationsService]
+})
+export class ConversationsModule {}
+
+// app.module.ts
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      useClass: DatabaseConfig
+    }),
+    UsersModule,
+    ConversationsModule,
+    MessagesModule,
+    AuthModule
+  ]
+})
+export class AppModule {}
+</code></pre>
+
+            <p>This structure makes it immediately clear where to find things. When a new developer joins the team and needs to fix a bug in conversation creation, they know exactly which module, controller, and service to look at. Compare this to a typical Express project where route handlers, middleware, and business logic are often scattered across the codebase with no enforced structure.</p>
+
+            <h2>Dependency Injection: Why It Matters</h2>
+
+            <p>Dependency injection is the pattern that makes NestJS testable and maintainable. Instead of importing and instantiating dependencies directly, you declare what you need in the constructor and NestJS provides it:</p>
+
+<pre><code>@Injectable()
+export class ConversationsService {
+  constructor(
+    @InjectRepository(Conversation)
+    private conversationRepo: Repository&lt;Conversation&gt;,
+    private usersService: UsersService,
+    private eventEmitter: EventEmitter2
+  ) {}
+
+  async create(dto: CreateConversationDto, creatorId: string) {
+    const creator = await this.usersService.findById(creatorId);
+    if (!creator) throw new NotFoundException('User not found');
+
+    const conversation = this.conversationRepo.create({
+      name: dto.name,
+      participants: [{ user: creator, role: 'admin' }]
+    });
+
+    const saved = await this.conversationRepo.save(conversation);
+    this.eventEmitter.emit('conversation.created', saved);
+    return saved;
+  }
+}
+</code></pre>
+
+            <p>When testing, you can easily swap out the real repository with a mock. When refactoring, you can change the implementation of <code>UsersService</code> without touching any of its consumers. This is the same benefit Angular developers get from DI on the frontend, and it is just as valuable on the backend.</p>
+
+            <h2>Guards and Interceptors</h2>
+
+            <p>Guards handle authorization. They run before the route handler and decide whether the request should proceed. Interceptors wrap around the route handler and can transform the request, response, or both. Here is how I typically implement JWT authentication:</p>
+
+<pre><code>// auth/guards/jwt-auth.guard.ts
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  canActivate(context: ExecutionContext) {
+    return super.canActivate(context);
+  }
+
+  handleRequest(err: any, user: any) {
+    if (err || !user) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+    return user;
+  }
+}
+
+// Apply globally or per-controller
+@Controller('conversations')
+@UseGuards(JwtAuthGuard)
+export class ConversationsController {
+  @Post()
+  @UseGuards(RolesGuard)
+  @Roles('admin', 'agent')
+  create(@Body() dto: CreateConversationDto, @CurrentUser() user: User) {
+    return this.conversationsService.create(dto, user.id);
+  }
+}
+</code></pre>
+
+            <p>Interceptors are useful for cross-cutting concerns like logging, response transformation, and caching. One interceptor I use in every project wraps responses in a consistent format:</p>
+
+<pre><code>@Injectable()
+export class TransformInterceptor&lt;T&gt; implements NestInterceptor&lt;T, Response&lt;T&gt;&gt; {
+  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;Response&lt;T&gt;&gt; {
+    return next.handle().pipe(
+      map(data =&gt; ({
+        success: true,
+        data,
+        timestamp: new Date().toISOString()
+      }))
+    );
+  }
+}
+</code></pre>
+
+            <h2>Validation Pipes</h2>
+
+            <p>Input validation is one of those things that is easy to get wrong. NestJS pairs beautifully with the <code>class-validator</code> library. You define your DTOs with validation decorators, enable the global validation pipe, and NestJS automatically validates and transforms incoming data:</p>
+
+<pre><code>// dto/create-conversation.dto.ts
+export class CreateConversationDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(100)
+  name: string;
+
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @ArrayMinSize(1)
+  participantIds: string[];
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  description?: string;
+}
+
+// main.ts
+app.useGlobalPipes(new ValidationPipe({
+  whitelist: true,        // Strip unknown properties
+  forbidNonWhitelisted: true,  // Throw on unknown properties
+  transform: true         // Auto-transform payloads to DTO instances
+}));
+</code></pre>
+
+            <p>The <code>whitelist</code> option is critical for security. It strips any properties from the request body that are not defined in the DTO. Without it, a malicious client could send additional fields that might get saved to the database. The <code>forbidNonWhitelisted</code> option goes a step further and rejects the request entirely if unknown properties are present.</p>
+
+            <h2>Error Handling</h2>
+
+            <p>NestJS has a built-in exception filter that catches unhandled exceptions and returns appropriate HTTP responses. But for production APIs, I always create a custom exception filter that logs errors properly and returns consistent error responses:</p>
+
+<pre><code>@Catch()
+export class AllExceptionsFilter implements ExceptionFilter {
+  constructor(private readonly logger: Logger) {}
+
+  catch(exception: unknown, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
+
+    const status = exception instanceof HttpException
+      ? exception.getStatus()
+      : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    const message = exception instanceof HttpException
+      ? exception.message
+      : 'Internal server error';
+
+    this.logger.error(`${request.method} ${request.url}`, {
+      status,
+      message,
+      stack: exception instanceof Error ? exception.stack : undefined
+    });
+
+    response.status(status).json({
+      success: false,
+      error: { status, message, timestamp: new Date().toISOString() }
+    });
+  }
+}
+</code></pre>
+
+            <p>NestJS has become my go-to for any backend work. The learning curve is minimal if you already know Angular, and the structure it provides pays dividends as the codebase grows. If you are a frontend developer who occasionally needs to build APIs, give it a serious look. The patterns will feel immediately familiar, and you will ship more reliable APIs because of the built-in guardrails.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a></p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a></p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

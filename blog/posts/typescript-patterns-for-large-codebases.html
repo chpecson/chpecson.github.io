@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TypeScript Patterns That Scale for Large Codebases - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="TypeScript Patterns That Scale for Large Codebases - Christian Pecson" />
+    <meta name="description" content="Lessons learned from maintaining a large TypeScript codebase — utility types, strict configurations, and patterns that keep things manageable." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/typescript-patterns-for-large-codebases.html" />
+    <meta property="og:title" content="TypeScript Patterns That Scale for Large Codebases - Christian Pecson" />
+    <meta property="og:description" content="Lessons learned from maintaining a large TypeScript codebase — utility types, strict configurations, and patterns that keep things manageable." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/style.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Rubik:400,500,700&display=swap');
+      .blog-nav { background-color: #fff; box-shadow: 0 10px 33px -14px rgba(0,0,0,.1); padding: 10px 0; }
+      .post-header { padding-top: 100px; padding-bottom: 40px; background-color: #f8fafe; }
+      .blog-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: rgba(0,107,222,0.1); color: #006bde; margin-bottom: 0.5rem; margin-right: 0.25rem; }
+      .post-content { padding-top: 60px; padding-bottom: 60px; }
+      .post-content p { line-height: 1.8; font-size: 15px; margin-bottom: 1.2rem; }
+      .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content pre { background: #f8fafe; border-radius: 7px; padding: 1.2rem; margin-bottom: 1.5rem; overflow-x: auto; }
+      .post-content code { font-size: 14px; color: #343a40; }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; }
+      .post-content li { margin-bottom: 0.5rem; }
+      .post-meta { font-size: 14px; color: #6b747d; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom blog-nav sticky-dark">
+      <section class="container">
+        <a class="logo text-uppercase text-primary" href="../../">Christian Pecson</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <section class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center">
+            <li class="nav-item"><a href="../../" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="../" class="nav-link">Blog</a></li>
+          </ul>
+        </section>
+      </section>
+    </nav>
+
+    <section class="post-header">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+            <div>
+              <span class="blog-tag">TypeScript</span>
+              <span class="blog-tag">Best Practices</span>
+            </div>
+            <h1 class="mt-3 mb-3">TypeScript Patterns That Scale for Large Codebases</h1>
+            <p class="post-meta">January 20, 2025 &middot; 9 min read</p>
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <section class="post-content">
+      <section class="container">
+        <section class="row justify-content-center">
+          <section class="col-lg-8">
+
+            <p>When you are working on a small project, TypeScript mostly just stays out of your way. You add a few interfaces, sprinkle in some type annotations, and everything is fine. But once your codebase crosses a certain threshold, maybe 50,000 lines, maybe 100,000, the patterns you use start to matter a lot. Types that were convenient at 5,000 lines become maintenance nightmares at 50,000. I want to share the patterns that have helped me keep large TypeScript codebases manageable.</p>
+
+            <h2>Discriminated Unions for State Management</h2>
+
+            <p>One of the most powerful TypeScript patterns I use daily is discriminated unions. Instead of modeling state as an object with a bunch of optional properties, you create a union where each variant has a literal type discriminator. This makes impossible states unrepresentable:</p>
+
+<pre><code>// Instead of this:
+interface RequestState {
+  loading: boolean;
+  data?: User[];
+  error?: string;
+}
+
+// Use this:
+type RequestState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; data: User[] }
+  | { status: 'error'; error: string };
+
+function renderUsers(state: RequestState) {
+  switch (state.status) {
+    case 'idle':
+      return 'Click to load';
+    case 'loading':
+      return 'Loading...';
+    case 'success':
+      return state.data.map(u =&gt; u.name).join(', ');
+    case 'error':
+      return `Error: ${state.error}`;
+  }
+}
+</code></pre>
+
+            <p>With the first approach, nothing stops you from having <code>loading: true</code> and <code>error: "something"</code> at the same time. With discriminated unions, the compiler enforces that each state has exactly the properties it should. This pattern has eliminated entire categories of bugs in our application.</p>
+
+            <h2>Branded Types for Domain Safety</h2>
+
+            <p>Here is a bug I have seen in almost every codebase I have worked on: passing a user ID where a conversation ID was expected, or mixing up two string values that happen to have the same underlying type. Branded types solve this elegantly:</p>
+
+<pre><code>type UserId = string &amp; { readonly __brand: 'UserId' };
+type ConversationId = string &amp; { readonly __brand: 'ConversationId' };
+
+function createUserId(id: string): UserId {
+  return id as UserId;
+}
+
+function createConversationId(id: string): ConversationId {
+  return id as ConversationId;
+}
+
+function getConversation(id: ConversationId): Promise&lt;Conversation&gt; {
+  // ...
+}
+
+const userId = createUserId('abc-123');
+const convId = createConversationId('conv-456');
+
+getConversation(convId);   // OK
+getConversation(userId);   // Compile error!
+</code></pre>
+
+            <p>The brand property never exists at runtime, so there is zero overhead. But at compile time, TypeScript treats <code>UserId</code> and <code>ConversationId</code> as completely incompatible types. We introduced this pattern for all entity IDs in our codebase, and it caught at least a dozen bugs in the first week of adoption.</p>
+
+            <h2>Strict Configuration Is Non-Negotiable</h2>
+
+            <p>If you are starting a new project, turn on <code>strict: true</code> from day one. If you have an existing project without it, make a plan to enable it incrementally. Here is the tsconfig I start every project with:</p>
+
+<pre><code>{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true
+  }
+}
+</code></pre>
+
+            <p>The one that surprises most people is <code>noUncheckedIndexedAccess</code>. With this enabled, accessing an array element or object property by index returns <code>T | undefined</code> instead of just <code>T</code>. It forces you to handle the case where the element might not exist, which reflects what actually happens at runtime.</p>
+
+            <h2>Utility Type Patterns</h2>
+
+            <p>TypeScript's built-in utility types are useful, but the real power comes from composing your own. Here are a few I find myself reaching for constantly:</p>
+
+<pre><code>// Make specific properties required while keeping the rest
+type WithRequired&lt;T, K extends keyof T&gt; = T &amp; { [P in K]-?: T[P] };
+
+// Deep partial for nested objects
+type DeepPartial&lt;T&gt; = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial&lt;T[P]&gt; : T[P];
+};
+
+// Extract the resolved type from a Promise
+type Awaited&lt;T&gt; = T extends Promise&lt;infer U&gt; ? U : T;
+
+// Strict omit that errors if you try to omit a non-existent key
+type StrictOmit&lt;T, K extends keyof T&gt; = Omit&lt;T, K&gt;;
+</code></pre>
+
+            <p>The <code>StrictOmit</code> type is particularly important. The built-in <code>Omit</code> accepts any string as the second parameter, which means typos silently pass. By constraining <code>K</code> to <code>keyof T</code>, you get a compile error if you try to omit a property that does not exist on the type. This has caught several refactoring bugs where a property was renamed but the Omit usage was not updated.</p>
+
+            <h2>Template Literal Types for API Routes</h2>
+
+            <p>One pattern that has been particularly useful in our NestJS backend is using template literal types to enforce API route consistency:</p>
+
+<pre><code>type ApiVersion = 'v1' | 'v2';
+type Resource = 'users' | 'conversations' | 'messages';
+type ApiRoute = `/api/${ApiVersion}/${Resource}`;
+
+function createEndpoint(route: ApiRoute): void {
+  // route is guaranteed to match the pattern
+}
+
+createEndpoint('/api/v1/users');        // OK
+createEndpoint('/api/v3/users');        // Error: 'v3' not in ApiVersion
+createEndpoint('/api/v1/something');    // Error: 'something' not in Resource
+</code></pre>
+
+            <p>These patterns are not silver bullets, and they do add complexity. But in a large codebase with multiple developers, they turn entire classes of runtime errors into compile-time errors. The upfront cost of writing stricter types pays for itself many times over in avoided production bugs and faster code reviews. Start with discriminated unions and strict config, then layer in branded types and custom utilities as your codebase grows.</p>
+
+            <div class="mt-5 pt-4 border-top">
+              <a href="../" class="text-primary">&larr; Back to Blog</a>
+            </div>
+
+          </section>
+        </section>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <section class="container">
+        <section class="row">
+          <section class="col-12">
+            <section>
+              <h5 class="mb-4 footer-list-title">Contact</h5>
+              <section>
+                <section class="media">
+                  <i data-feather="github" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://github.com/chpecson" target="_blank" rel="noreferrer" class="text-light">Github</a></p>
+                  </section>
+                </section>
+                <section class="media">
+                  <i data-feather="linkedin" class="icon-dual-light mt-1 mr-2"></i>
+                  <section class="media-body">
+                    <p><a href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer" class="text-light">LinkedIn</a></p>
+                  </section>
+                </section>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ionicons@5.0.1/dist/ionicons/ionicons.js"></script>
+    <script>feather.replace();</script>
+  </body>
+</html>

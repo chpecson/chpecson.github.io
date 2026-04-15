@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>React and Next.js for Angular Developers - Christian Pecson</title>
+    <meta name="description" content="Everything I wish I knew when switching from Angular to the React ecosystem." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      :root {
+        --bg: #0B1120; --bg-surface: #131B2E; --bg-surface-alt: #0F1729;
+        --accent: #818CF8; --accent-bright: #A5B4FC; --accent-dim: #4F46E5;
+        --warm: #F59E0B; --text: #E2E8F0; --text-muted: #94A3B8; --text-dim: #64748B;
+        --border: rgba(255,255,255,0.06); --font-display: 'Syne', sans-serif;
+        --font-body: 'DM Sans', sans-serif; --font-mono: 'JetBrains Mono', monospace; --max-width: 720px;
+      }
+      html { scroll-behavior: smooth; }
+      body { font-family: var(--font-body); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+      body::after { content: ''; position: fixed; inset: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
+      a { color: var(--accent-bright); text-decoration: none; transition: color 0.3s; }
+      a:hover { color: var(--warm); }
+      .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+      .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 0; background: rgba(11,17,32,0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+      .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+      .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text); }
+      .nav-logo:hover { color: var(--accent-bright); }
+      .nav-links { display: flex; gap: 8px; }
+      .nav-links a { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); padding: 6px 14px; border-radius: 8px; transition: all 0.3s; }
+      .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+      .post-header { padding: 140px 0 40px; }
+      .post-tags { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+      .post-tag { font-family: var(--font-mono); font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(129,140,248,0.08); color: var(--accent); border: 1px solid rgba(129,140,248,0.12); }
+      .post-title { font-family: var(--font-display); font-size: clamp(1.8rem,3.5vw,2.5rem); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+      .post-meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); display: flex; gap: 16px; }
+      .post-content { padding: 48px 0 80px; }
+      .post-content p { margin-bottom: 1.2rem; color: var(--text-muted); line-height: 1.8; font-size: 15px; }
+      .post-content h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+      .post-content pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 1.5rem; overflow-x: auto; font-size: 13px; }
+      .post-content code { font-family: var(--font-mono); font-size: 13px; color: var(--accent-bright); }
+      .post-content pre code { color: var(--text); }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; padding-left: 0; list-style: none; }
+      .post-content li { position: relative; padding-left: 18px; margin-bottom: 8px; font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+      .post-content li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+      .post-content strong { color: var(--text); font-weight: 600; }
+      .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin-bottom: 32px; transition: color 0.3s; }
+      .back-link:hover { color: var(--accent-bright); }
+      .back-link svg { width: 16px; height: 16px; }
+      .footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; }
+      .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+      .footer-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); }
+      .footer-link:hover { color: var(--accent-bright); }
+      .footer-link svg { width: 18px; height: 18px; }
+      .footer-copy { font-size: 13px; color: var(--text-dim); }
+    </style>
+  </head>
+  <body>
+    <nav class="nav"><div class="nav-inner"><a href="../../" class="nav-logo">christian.dev</a><div class="nav-links"><a href="../../">Home</a><a href="../">Blog</a></div></div></nav>
+
+    <header class="post-header">
+      <div class="container">
+        <a href="../" class="back-link"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to blog</a>
+        <div class="post-tags"><span class="post-tag">React</span><span class="post-tag">Next.js</span></div>
+        <h1 class="post-title">React and Next.js for Angular Developers: A Practical Guide</h1>
+        <div class="post-meta"><span>February 12, 2026</span><span>9 min read</span></div>
+      </div>
+    </header>
+
+    <article class="post-content">
+      <div class="container">
+        <p>I spent four years deep in the Angular ecosystem. Services, modules, dependency injection, RxJS observables — I could build anything with Angular and Ionic. So when I decided to add React and Next.js to my toolbelt, I expected a steep learning curve. What I found instead was a different philosophy that, once understood, made me a better developer across both ecosystems.</p>
+
+        <p>This post is the guide I wish I had when I started. Not a "React tutorial" — there are thousands of those. This is a mental model translation guide for Angular developers.</p>
+
+        <h2>The Fundamental Mindset Shift</h2>
+
+        <p>In Angular, the framework makes decisions for you. There's one way to do routing, one way to handle forms, one way to manage HTTP calls. Angular is opinionated and comprehensive — you stay inside its world.</p>
+
+        <p>React is the opposite. It gives you a view layer and says "figure out the rest." This feels chaotic at first, but it's actually liberating. You compose your stack from best-in-class libraries instead of accepting the framework's choices.</p>
+
+        <p>Next.js bridges this gap. It adds the structure and conventions that React doesn't provide — routing, server-side rendering, API routes, image optimization. If Angular is a monolith and React is microservices, Next.js is the well-architected middleware layer.</p>
+
+        <h2>Translating Angular Concepts</h2>
+
+        <p><strong>Components</strong> translate almost directly. Angular's <code>@Component</code> decorator becomes a function that returns JSX. The biggest difference: React components are just functions. No class hierarchy, no lifecycle hooks as methods — just functions with hooks.</p>
+
+        <pre><code>// Angular
+@Component({
+  selector: 'app-greeting',
+  template: '&lt;h1&gt;Hello, {{ name }}&lt;/h1&gt;'
+})
+export class GreetingComponent {
+  @Input() name: string;
+}
+
+// React
+function Greeting({ name }: { name: string }) {
+  return &lt;h1&gt;Hello, {name}&lt;/h1&gt;;
+}</code></pre>
+
+        <p><strong>Services &amp; Dependency Injection</strong> don't exist in React. This was the hardest adjustment for me. Instead of injectable singletons, React uses:</p>
+
+        <ul>
+          <li><strong>Context API</strong> — for sharing state across the component tree (like a simplified DI container)</li>
+          <li><strong>Custom hooks</strong> — for reusable stateful logic (like services without DI)</li>
+          <li><strong>External state libraries</strong> — Zustand, Jotai, or TanStack Query for complex state management</li>
+        </ul>
+
+        <p><strong>RxJS Observables</strong> become hooks and state. Angular's reactive programming with <code>BehaviorSubject</code> and <code>pipe</code> operators becomes React's <code>useState</code>, <code>useEffect</code>, and libraries like TanStack Query for server state.</p>
+
+        <pre><code>// Angular - RxJS approach
+this.users$ = this.http.get&lt;User[]&gt;('/api/users').pipe(
+  catchError(this.handleError),
+  shareReplay(1)
+);
+
+// React - TanStack Query approach
+const { data: users, error, isLoading } = useQuery({
+  queryKey: ['users'],
+  queryFn: () => fetch('/api/users').then(r =&gt; r.json())
+});</code></pre>
+
+        <h2>Next.js: The "Batteries Included" React</h2>
+
+        <p>Next.js is where Angular developers will feel most at home. It provides:</p>
+
+        <ul>
+          <li><strong>File-based routing</strong> — like Angular's router but driven by your folder structure. No route configuration files.</li>
+          <li><strong>Server-side rendering</strong> — pages can render on the server, something Angular Universal does but Next.js does by default.</li>
+          <li><strong>API routes</strong> — backend endpoints living alongside your frontend code. No separate NestJS server needed for simple APIs.</li>
+          <li><strong>Server Components</strong> — components that run only on the server. Fetch data without client-side waterfalls.</li>
+        </ul>
+
+        <pre><code>// app/users/page.tsx - Server Component (runs on server)
+export default async function UsersPage() {
+  const users = await db.users.findMany();
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Users&lt;/h1&gt;
+      {users.map(user =&gt; (
+        &lt;UserCard key={user.id} user={user} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+        <p>The App Router in Next.js 14+ feels remarkably similar to Angular's module-based architecture, with layouts, loading states, and error boundaries built into the routing layer.</p>
+
+        <h2>What Angular Does Better</h2>
+
+        <p>I'm not going to pretend React is better at everything. Angular still wins in several areas:</p>
+
+        <ul>
+          <li><strong>Forms</strong> — Angular's reactive forms are genuinely superior to anything in the React ecosystem. React Hook Form is good but not as elegant.</li>
+          <li><strong>Consistency in large teams</strong> — Angular's opinionated structure means less architectural debate. Everyone writes code the same way.</li>
+          <li><strong>TypeScript integration</strong> — Angular was TypeScript-first from the beginning. React's TypeScript support is excellent now, but some patterns (like ref forwarding) still feel bolted on.</li>
+          <li><strong>Built-in testing</strong> — Angular CLI generates test files and provides TestBed. React testing requires more setup and library choices.</li>
+        </ul>
+
+        <h2>What React/Next.js Does Better</h2>
+
+        <ul>
+          <li><strong>Performance</strong> — Server Components, streaming SSR, and automatic code splitting make Next.js apps blazingly fast out of the box.</li>
+          <li><strong>Ecosystem</strong> — The React ecosystem is simply larger. More libraries, more UI kits, more community resources.</li>
+          <li><strong>Learning curve</strong> — React's simplicity (it's just functions) makes it faster to onboard new developers.</li>
+          <li><strong>Innovation speed</strong> — React Server Components, Suspense, streaming — the React team ships transformative features faster.</li>
+        </ul>
+
+        <h2>My Recommendation</h2>
+
+        <p>If you're an Angular developer, learning React and Next.js doesn't mean abandoning Angular. It means expanding your capabilities. I still reach for Angular + Ionic when building hybrid mobile apps. But for new web projects — marketing sites, dashboards, SaaS products — Next.js is now my default choice.</p>
+
+        <p>The transition took me about three weeks of focused learning to feel productive, and about two months to feel truly comfortable. The concepts transfer more than you'd expect. You're not starting over — you're expanding.</p>
+      </div>
+    </article>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-links">
+          <a class="footer-link" href="https://github.com/chpecson" target="_blank" rel="noreferrer"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+          <a class="footer-link" href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
+        </div>
+        <div class="footer-copy">&copy; 2026 Christian Pecson</div>
+      </div>
+    </footer>
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 "use strict";
 
 // Requirements
-var sass = require('node-sass');
+var sass = require('sass');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var getDirName = require('path').dirname;
@@ -13,15 +13,16 @@ function compileSass(options) {
     }, options);
 
     // render the result
-    var result = sass.renderSync({
-        file: options.src,
-        outputStyle: options.style,
+
+    var result = sass.compile(options.src, {
+        style: options.style,
         sourceMap: options.sourceMap,
-        debug: options.debug
+        verbose: options.debug
     });
 
     // write the result to file
-    mkdirp(getDirName(options.dest)).then(function() {
+
+    mkdirp(getDirName(options.dest)).then(function () {
         fs.writeFileSync(options.dest, result.css);
     });
 
@@ -29,11 +30,16 @@ function compileSass(options) {
     console.log(' ' + options.dest + ' built.');
 }
 
-// Minified
-compileSass({
-    src : 'scss/style.scss',
-    dest : 'css/style.min.css',
-    style: 'compressed',
-    sourcemap: false,
-    debug: false
+// Compile all SCSS files in scss/ that do not start with _
+var path = require('path');
+fs.readdirSync('scss').forEach(function (file) {
+    if (file.endsWith('.scss') && !file.startsWith('_')) {
+        compileSass({
+            src: path.join('scss', file),
+            dest: path.join('css', file.replace(/\.scss$/, '.min.css')),
+            style: 'compressed',
+            sourcemap: false,
+            debug: false
+        });
+    }
 });

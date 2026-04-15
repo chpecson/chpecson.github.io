@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Angular Signals: A Practical Guide from the Trenches - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Angular Signals: A Practical Guide from the Trenches - Christian Pecson" />
+    <meta name="description" content="My experience adopting Angular Signals in a production app — what worked, what didn't, and how it changed the way I think about reactivity." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/angular-signals-practical-guide.html" />
+    <meta property="og:title" content="Angular Signals: A Practical Guide from the Trenches - Christian Pecson" />
+    <meta property="og:description" content="My experience adopting Angular Signals in a production app — what worked, what didn't, and how it changed the way I think about reactivity." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0B1120;
+        --bg-surface: #131B2E;
+        --bg-surface-alt: #0F1729;
+        --accent: #818CF8;
+        --accent-bright: #A5B4FC;
+        --accent-dim: #4F46E5;
+        --warm: #F59E0B;
+        --text: #E2E8F0;
+        --text-muted: #94A3B8;
+        --text-dim: #64748B;
+        --border: rgba(255,255,255,0.06);
+        --border-accent: rgba(129,140,248,0.2);
+        --font-display: 'Syne', sans-serif;
+        --font-body: 'DM Sans', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --max-width: 720px;
+      }
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+      }
+      a { color: var(--accent-bright); text-decoration: none; transition: color 0.3s; }
+      a:hover { color: var(--warm); }
+      .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+      .nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+        padding: 12px 0;
+        background: rgba(11,17,32,0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      }
+      .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text); }
+      .nav-logo:hover { color: var(--accent-bright); }
+      .nav-links { display: flex; gap: 8px; }
+      .nav-links a {
+        font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+        padding: 6px 14px; border-radius: 8px; transition: all 0.3s;
+      }
+      .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+      .post-header { padding: 140px 0 40px; }
+      .post-tags { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+      .post-tag {
+        font-family: var(--font-mono); font-size: 11px; padding: 3px 10px;
+        border-radius: 6px; background: rgba(129,140,248,0.08); color: var(--accent);
+        border: 1px solid rgba(129,140,248,0.12);
+      }
+      .post-title {
+        font-family: var(--font-display); font-size: clamp(1.8rem,3.5vw,2.5rem);
+        font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); display: flex; gap: 16px; }
+      .post-content { padding: 48px 0 80px; }
+      .post-content p { margin-bottom: 1.2rem; color: var(--text-muted); line-height: 1.8; font-size: 15px; }
+      .post-content h2 {
+        font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+        color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em;
+      }
+      .post-content h3 {
+        font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+        color: #fff; margin-top: 2rem; margin-bottom: 0.8rem;
+      }
+      .post-content pre {
+        background: var(--bg-surface); border: 1px solid var(--border);
+        border-radius: 10px; padding: 20px; margin-bottom: 1.5rem;
+        overflow-x: auto; font-size: 13px;
+      }
+      .post-content code { font-family: var(--font-mono); font-size: 13px; color: var(--accent-bright); }
+      .post-content pre code { color: var(--text); }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; padding-left: 0; list-style: none; }
+      .post-content li {
+        position: relative; padding-left: 18px; margin-bottom: 8px;
+        font-size: 14px; color: var(--text-muted); line-height: 1.7;
+      }
+      .post-content li::before {
+        content: ''; position: absolute; left: 0; top: 9px;
+        width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+      }
+      .post-content strong { color: var(--text); font-weight: 600; }
+      .post-content blockquote {
+        border-left: 3px solid var(--accent-dim); padding-left: 20px;
+        margin: 1.5rem 0; font-style: italic; color: var(--text-dim);
+      }
+      .back-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);
+        margin-bottom: 32px; transition: color 0.3s;
+      }
+      .back-link:hover { color: var(--accent-bright); }
+      .back-link svg { width: 16px; height: 16px; }
+      .footer {
+        border-top: 1px solid var(--border); padding: 40px 0; text-align: center;
+      }
+      .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+      .footer-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 14px; color: var(--text-muted);
+      }
+      .footer-link:hover { color: var(--accent-bright); }
+      .footer-link svg { width: 18px; height: 18px; }
+      .footer-copy { font-size: 13px; color: var(--text-dim); }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="../../" class="nav-logo">christian.dev</a>
+        <div class="nav-links">
+          <a href="../../">Home</a>
+          <a href="../">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <header class="post-header">
+      <div class="container">
+        <a href="../" class="back-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to blog
+        </a>
+        <div class="post-tags">
+          <span class="post-tag">Angular</span>
+          <span class="post-tag">Signals</span>
+        </div>
+        <h1 class="post-title">Angular Signals: A Practical Guide from the Trenches</h1>
+        <div class="post-meta">
+          <span>October 8, 2024</span>
+          <span>10 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <article class="post-content">
+      <div class="container">
+
+            <p>When Angular first announced Signals, I was cautiously optimistic. After years of wrangling RxJS subscriptions, managing <code>async</code> pipes, and debugging memory leaks caused by forgotten <code>unsubscribe</code> calls, the promise of a simpler reactivity model was appealing. Now, several months into using Signals in a production Ionic application, I can share what I have actually learned from the experience.</p>
+
+            <h2>Signals Basics: What They Actually Are</h2>
+
+            <p>At its core, a Signal is a wrapper around a value that notifies consumers when that value changes. If you have used Vue's <code>ref()</code> or Solid's <code>createSignal()</code>, the concept is identical. The Angular implementation looks like this:</p>
+
+<pre><code>import { signal, computed, effect } from '@angular/core';
+
+// Writable signal
+const count = signal(0);
+
+// Read the value
+console.log(count()); // 0
+
+// Update the value
+count.set(5);
+count.update(prev =&gt; prev + 1);
+
+// Computed signal (derived state)
+const doubled = computed(() =&gt; count() * 2);
+
+// Effect (side effects when signals change)
+effect(() =&gt; {
+  console.log(`Count is now: ${count()}`);
+});
+</code></pre>
+
+            <p>The key insight is that signals are synchronous and pull-based. Unlike Observables, which push values to subscribers, signals hold a current value that consumers pull when they need it. Angular's change detection can then ask each signal "did you change?" rather than re-running the entire component tree.</p>
+
+            <h2>Computed Signals: Where the Power Lives</h2>
+
+            <p>Computed signals are where Signals really start to shine. They automatically track their dependencies and only recompute when those dependencies change. Here is a real-world example from our chat application:</p>
+
+<pre><code>@Component({
+  selector: 'app-conversation-list',
+  template: `
+    &lt;input [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" /&gt;
+    &lt;div *ngFor="let conv of filteredConversations()"&gt;
+      {{ conv.name }} - {{ conv.lastMessage }}
+    &lt;/div&gt;
+    &lt;p&gt;Showing {{ filteredConversations().length }} of {{ conversations().length }}&lt;/p&gt;
+  `
+})
+export class ConversationListComponent {
+  conversations = signal&lt;Conversation[]&gt;([]);
+  searchTerm = signal('');
+
+  filteredConversations = computed(() =&gt; {
+    const term = this.searchTerm().toLowerCase();
+    if (!term) return this.conversations();
+    return this.conversations().filter(c =&gt;
+      c.name.toLowerCase().includes(term)
+    );
+  });
+}
+</code></pre>
+
+            <p>Before Signals, this would have required a <code>BehaviorSubject</code> for the search term, a <code>combineLatest</code> to merge it with the conversations observable, and a <code>map</code> operator to do the filtering. Plus an <code>async</code> pipe in the template and careful subscription management. The Signal version is half the code, easier to read, and has no subscription cleanup to worry about.</p>
+
+            <h2>Effects: Use Sparingly</h2>
+
+            <p>Effects are the escape hatch for side effects, like logging, syncing to localStorage, or calling an API when a value changes. They are the most "RxJS-like" part of Signals, and they are also the part you should use most carefully:</p>
+
+<pre><code>export class SettingsComponent {
+  theme = signal&lt;'light' | 'dark'&gt;('light');
+
+  constructor() {
+    // Sync theme to localStorage whenever it changes
+    effect(() =&gt; {
+      localStorage.setItem('theme', this.theme());
+      document.body.classList.toggle('dark-mode', this.theme() === 'dark');
+    });
+  }
+}
+</code></pre>
+
+            <p>A word of caution: effects run at least once and then re-run whenever any signal they read changes. If your effect reads five signals, it will run whenever any of them change. This can lead to unexpected execution frequency if you are not careful. I have a personal rule: if an effect is reading more than two signals, I step back and ask whether a computed signal with a narrower effect would be cleaner.</p>
+
+            <h2>Migrating from RxJS: A Gradual Approach</h2>
+
+            <p>You do not need to rewrite your entire application to use Signals. Angular provides <code>toSignal()</code> and <code>toObservable()</code> to bridge between the two worlds. This is the approach I have taken in our existing codebase:</p>
+
+<pre><code>import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+
+@Component({ /* ... */ })
+export class DashboardComponent {
+  // Convert an existing Observable to a Signal
+  private userService = inject(UserService);
+  currentUser = toSignal(this.userService.currentUser$, {
+    initialValue: null
+  });
+
+  // Use the signal in computed values
+  greeting = computed(() =&gt; {
+    const user = this.currentUser();
+    return user ? `Welcome back, ${user.name}` : 'Please log in';
+  });
+}
+</code></pre>
+
+            <p>My strategy has been to keep services using RxJS where it makes sense (HTTP calls, WebSocket streams, complex async operations) and convert to Signals at the component level using <code>toSignal()</code>. New components are written with Signals from the start. Over time, we will migrate services as well, but there is no rush. The interop layer works well enough that both can coexist indefinitely.</p>
+
+            <h2>What I Would Do Differently</h2>
+
+            <p>Looking back, I wish I had started with a stricter convention for signal naming. We use a mix of plain names and names suffixed with <code>Sig</code>, which gets confusing. Pick a convention and stick with it. I also wish I had been more aggressive about using <code>computed</code> from the start. My early Signal code had too many standalone signals that should have been derived state. The more you push into <code>computed</code>, the fewer bugs you get from inconsistent state.</p>
+
+            <p>Overall, Signals have made our Angular code simpler, more readable, and easier to reason about. They are not a replacement for RxJS in every case, but they have replaced it in about 70 percent of our component-level state management. If you are on Angular 17 or later and have not started experimenting with Signals yet, I would strongly encourage you to try them on your next feature.</p>
+
+      </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-links">
+          <a class="footer-link" href="https://github.com/chpecson" target="_blank" rel="noreferrer">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a class="footer-link" href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="footer-copy">&copy; 2025 Christian Pecson</div>
+      </div>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+  </body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Building Production APIs with NestJS: Lessons from Real Projects - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Building Production APIs with NestJS: Lessons from Real Projects - Christian Pecson" />
+    <meta name="description" content="How NestJS brings structure to Node.js APIs — modules, dependency injection, and patterns I use in every project." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/building-apis-with-nestjs.html" />
+    <meta property="og:title" content="Building Production APIs with NestJS: Lessons from Real Projects - Christian Pecson" />
+    <meta property="og:description" content="How NestJS brings structure to Node.js APIs — modules, dependency injection, and patterns I use in every project." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0B1120;
+        --bg-surface: #131B2E;
+        --bg-surface-alt: #0F1729;
+        --accent: #818CF8;
+        --accent-bright: #A5B4FC;
+        --accent-dim: #4F46E5;
+        --warm: #F59E0B;
+        --text: #E2E8F0;
+        --text-muted: #94A3B8;
+        --text-dim: #64748B;
+        --border: rgba(255,255,255,0.06);
+        --border-accent: rgba(129,140,248,0.2);
+        --font-display: 'Syne', sans-serif;
+        --font-body: 'DM Sans', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --max-width: 720px;
+      }
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+      }
+      a { color: var(--accent-bright); text-decoration: none; transition: color 0.3s; }
+      a:hover { color: var(--warm); }
+      .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+      .nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+        padding: 12px 0;
+        background: rgba(11,17,32,0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      }
+      .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text); }
+      .nav-logo:hover { color: var(--accent-bright); }
+      .nav-links { display: flex; gap: 8px; }
+      .nav-links a {
+        font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+        padding: 6px 14px; border-radius: 8px; transition: all 0.3s;
+      }
+      .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+      .post-header { padding: 140px 0 40px; }
+      .post-tags { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+      .post-tag {
+        font-family: var(--font-mono); font-size: 11px; padding: 3px 10px;
+        border-radius: 6px; background: rgba(129,140,248,0.08); color: var(--accent);
+        border: 1px solid rgba(129,140,248,0.12);
+      }
+      .post-title {
+        font-family: var(--font-display); font-size: clamp(1.8rem,3.5vw,2.5rem);
+        font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); display: flex; gap: 16px; }
+      .post-content { padding: 48px 0 80px; }
+      .post-content p { margin-bottom: 1.2rem; color: var(--text-muted); line-height: 1.8; font-size: 15px; }
+      .post-content h2 {
+        font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+        color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em;
+      }
+      .post-content h3 {
+        font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+        color: #fff; margin-top: 2rem; margin-bottom: 0.8rem;
+      }
+      .post-content pre {
+        background: var(--bg-surface); border: 1px solid var(--border);
+        border-radius: 10px; padding: 20px; margin-bottom: 1.5rem;
+        overflow-x: auto; font-size: 13px;
+      }
+      .post-content code { font-family: var(--font-mono); font-size: 13px; color: var(--accent-bright); }
+      .post-content pre code { color: var(--text); }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; padding-left: 0; list-style: none; }
+      .post-content li {
+        position: relative; padding-left: 18px; margin-bottom: 8px;
+        font-size: 14px; color: var(--text-muted); line-height: 1.7;
+      }
+      .post-content li::before {
+        content: ''; position: absolute; left: 0; top: 9px;
+        width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+      }
+      .post-content strong { color: var(--text); font-weight: 600; }
+      .post-content blockquote {
+        border-left: 3px solid var(--accent-dim); padding-left: 20px;
+        margin: 1.5rem 0; font-style: italic; color: var(--text-dim);
+      }
+      .back-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);
+        margin-bottom: 32px; transition: color 0.3s;
+      }
+      .back-link:hover { color: var(--accent-bright); }
+      .back-link svg { width: 16px; height: 16px; }
+      .footer {
+        border-top: 1px solid var(--border); padding: 40px 0; text-align: center;
+      }
+      .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+      .footer-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 14px; color: var(--text-muted);
+      }
+      .footer-link:hover { color: var(--accent-bright); }
+      .footer-link svg { width: 18px; height: 18px; }
+      .footer-copy { font-size: 13px; color: var(--text-dim); }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="../../" class="nav-logo">christian.dev</a>
+        <div class="nav-links">
+          <a href="../../">Home</a>
+          <a href="../">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <header class="post-header">
+      <div class="container">
+        <a href="../" class="back-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to blog
+        </a>
+        <div class="post-tags">
+          <span class="post-tag">Node.js</span>
+          <span class="post-tag">API</span>
+        </div>
+        <h1 class="post-title">Building Production APIs with NestJS: Lessons from Real Projects</h1>
+        <div class="post-meta">
+          <span>July 18, 2023</span>
+          <span>10 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <article class="post-content">
+      <div class="container">
+
+            <p>As a frontend developer who primarily works with Angular, picking up NestJS felt like coming home. The framework borrows heavily from Angular's architecture: modules, dependency injection, decorators, and a clear separation of concerns. But NestJS applies these patterns to the server side, and after building several production APIs with it, I can say it brings a level of structure to Node.js that I did not know I was missing.</p>
+
+            <h2>Modules: Organizing Your API</h2>
+
+            <p>NestJS modules are the foundation of application organization. Each module encapsulates a set of related controllers, services, and other providers. In a chat application API, you might have a module for users, one for conversations, and one for messages:</p>
+
+<pre><code>// conversations/conversations.module.ts
+@Module({
+  imports: [TypeOrmModule.forFeature([Conversation, Participant])],
+  controllers: [ConversationsController],
+  providers: [ConversationsService, ConversationsGateway],
+  exports: [ConversationsService]
+})
+export class ConversationsModule {}
+
+// app.module.ts
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      useClass: DatabaseConfig
+    }),
+    UsersModule,
+    ConversationsModule,
+    MessagesModule,
+    AuthModule
+  ]
+})
+export class AppModule {}
+</code></pre>
+
+            <p>This structure makes it immediately clear where to find things. When a new developer joins the team and needs to fix a bug in conversation creation, they know exactly which module, controller, and service to look at. Compare this to a typical Express project where route handlers, middleware, and business logic are often scattered across the codebase with no enforced structure.</p>
+
+            <h2>Dependency Injection: Why It Matters</h2>
+
+            <p>Dependency injection is the pattern that makes NestJS testable and maintainable. Instead of importing and instantiating dependencies directly, you declare what you need in the constructor and NestJS provides it:</p>
+
+<pre><code>@Injectable()
+export class ConversationsService {
+  constructor(
+    @InjectRepository(Conversation)
+    private conversationRepo: Repository&lt;Conversation&gt;,
+    private usersService: UsersService,
+    private eventEmitter: EventEmitter2
+  ) {}
+
+  async create(dto: CreateConversationDto, creatorId: string) {
+    const creator = await this.usersService.findById(creatorId);
+    if (!creator) throw new NotFoundException('User not found');
+
+    const conversation = this.conversationRepo.create({
+      name: dto.name,
+      participants: [{ user: creator, role: 'admin' }]
+    });
+
+    const saved = await this.conversationRepo.save(conversation);
+    this.eventEmitter.emit('conversation.created', saved);
+    return saved;
+  }
+}
+</code></pre>
+
+            <p>When testing, you can easily swap out the real repository with a mock. When refactoring, you can change the implementation of <code>UsersService</code> without touching any of its consumers. This is the same benefit Angular developers get from DI on the frontend, and it is just as valuable on the backend.</p>
+
+            <h2>Guards and Interceptors</h2>
+
+            <p>Guards handle authorization. They run before the route handler and decide whether the request should proceed. Interceptors wrap around the route handler and can transform the request, response, or both. Here is how I typically implement JWT authentication:</p>
+
+<pre><code>// auth/guards/jwt-auth.guard.ts
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  canActivate(context: ExecutionContext) {
+    return super.canActivate(context);
+  }
+
+  handleRequest(err: any, user: any) {
+    if (err || !user) {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+    return user;
+  }
+}
+
+// Apply globally or per-controller
+@Controller('conversations')
+@UseGuards(JwtAuthGuard)
+export class ConversationsController {
+  @Post()
+  @UseGuards(RolesGuard)
+  @Roles('admin', 'agent')
+  create(@Body() dto: CreateConversationDto, @CurrentUser() user: User) {
+    return this.conversationsService.create(dto, user.id);
+  }
+}
+</code></pre>
+
+            <p>Interceptors are useful for cross-cutting concerns like logging, response transformation, and caching. One interceptor I use in every project wraps responses in a consistent format:</p>
+
+<pre><code>@Injectable()
+export class TransformInterceptor&lt;T&gt; implements NestInterceptor&lt;T, Response&lt;T&gt;&gt; {
+  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;Response&lt;T&gt;&gt; {
+    return next.handle().pipe(
+      map(data =&gt; ({
+        success: true,
+        data,
+        timestamp: new Date().toISOString()
+      }))
+    );
+  }
+}
+</code></pre>
+
+            <h2>Validation Pipes</h2>
+
+            <p>Input validation is one of those things that is easy to get wrong. NestJS pairs beautifully with the <code>class-validator</code> library. You define your DTOs with validation decorators, enable the global validation pipe, and NestJS automatically validates and transforms incoming data:</p>
+
+<pre><code>// dto/create-conversation.dto.ts
+export class CreateConversationDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(100)
+  name: string;
+
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @ArrayMinSize(1)
+  participantIds: string[];
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  description?: string;
+}
+
+// main.ts
+app.useGlobalPipes(new ValidationPipe({
+  whitelist: true,        // Strip unknown properties
+  forbidNonWhitelisted: true,  // Throw on unknown properties
+  transform: true         // Auto-transform payloads to DTO instances
+}));
+</code></pre>
+
+            <p>The <code>whitelist</code> option is critical for security. It strips any properties from the request body that are not defined in the DTO. Without it, a malicious client could send additional fields that might get saved to the database. The <code>forbidNonWhitelisted</code> option goes a step further and rejects the request entirely if unknown properties are present.</p>
+
+            <h2>Error Handling</h2>
+
+            <p>NestJS has a built-in exception filter that catches unhandled exceptions and returns appropriate HTTP responses. But for production APIs, I always create a custom exception filter that logs errors properly and returns consistent error responses:</p>
+
+<pre><code>@Catch()
+export class AllExceptionsFilter implements ExceptionFilter {
+  constructor(private readonly logger: Logger) {}
+
+  catch(exception: unknown, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
+
+    const status = exception instanceof HttpException
+      ? exception.getStatus()
+      : HttpStatus.INTERNAL_SERVER_ERROR;
+
+    const message = exception instanceof HttpException
+      ? exception.message
+      : 'Internal server error';
+
+    this.logger.error(`${request.method} ${request.url}`, {
+      status,
+      message,
+      stack: exception instanceof Error ? exception.stack : undefined
+    });
+
+    response.status(status).json({
+      success: false,
+      error: { status, message, timestamp: new Date().toISOString() }
+    });
+  }
+}
+</code></pre>
+
+            <p>NestJS has become my go-to for any backend work. The learning curve is minimal if you already know Angular, and the structure it provides pays dividends as the codebase grows. If you are a frontend developer who occasionally needs to build APIs, give it a serious look. The patterns will feel immediately familiar, and you will ship more reliable APIs because of the built-in guardrails.</p>
+
+      </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-links">
+          <a class="footer-link" href="https://github.com/chpecson" target="_blank" rel="noreferrer">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a class="footer-link" href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="footer-copy">&copy; 2025 Christian Pecson</div>
+      </div>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+  </body>
+</html>

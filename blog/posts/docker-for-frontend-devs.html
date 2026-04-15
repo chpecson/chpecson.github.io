@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docker for Frontend Developers: What You Actually Need to Know - Christian Pecson</title>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <meta name="title" content="Docker for Frontend Developers: What You Actually Need to Know - Christian Pecson" />
+    <meta name="description" content="A no-fluff guide to Docker from a frontend dev's perspective — containerizing apps, dev environments, and CI/CD pipelines." />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://chpecson.dev/blog/posts/docker-for-frontend-devs.html" />
+    <meta property="og:title" content="Docker for Frontend Developers: What You Actually Need to Know - Christian Pecson" />
+    <meta property="og:description" content="A no-fluff guide to Docker from a frontend dev's perspective — containerizing apps, dev environments, and CI/CD pipelines." />
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meta-preview.png" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0B1120;
+        --bg-surface: #131B2E;
+        --bg-surface-alt: #0F1729;
+        --accent: #818CF8;
+        --accent-bright: #A5B4FC;
+        --accent-dim: #4F46E5;
+        --warm: #F59E0B;
+        --text: #E2E8F0;
+        --text-muted: #94A3B8;
+        --text-dim: #64748B;
+        --border: rgba(255,255,255,0.06);
+        --border-accent: rgba(129,140,248,0.2);
+        --font-display: 'Syne', sans-serif;
+        --font-body: 'DM Sans', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --max-width: 720px;
+      }
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+      }
+      a { color: var(--accent-bright); text-decoration: none; transition: color 0.3s; }
+      a:hover { color: var(--warm); }
+      .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+      .nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+        padding: 12px 0;
+        background: rgba(11,17,32,0.85);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        display: flex; align-items: center; justify-content: space-between;
+        max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      }
+      .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text); }
+      .nav-logo:hover { color: var(--accent-bright); }
+      .nav-links { display: flex; gap: 8px; }
+      .nav-links a {
+        font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+        padding: 6px 14px; border-radius: 8px; transition: all 0.3s;
+      }
+      .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+      .post-header { padding: 140px 0 40px; }
+      .post-tags { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+      .post-tag {
+        font-family: var(--font-mono); font-size: 11px; padding: 3px 10px;
+        border-radius: 6px; background: rgba(129,140,248,0.08); color: var(--accent);
+        border: 1px solid rgba(129,140,248,0.12);
+      }
+      .post-title {
+        font-family: var(--font-display); font-size: clamp(1.8rem,3.5vw,2.5rem);
+        font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); display: flex; gap: 16px; }
+      .post-content { padding: 48px 0 80px; }
+      .post-content p { margin-bottom: 1.2rem; color: var(--text-muted); line-height: 1.8; font-size: 15px; }
+      .post-content h2 {
+        font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+        color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em;
+      }
+      .post-content h3 {
+        font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+        color: #fff; margin-top: 2rem; margin-bottom: 0.8rem;
+      }
+      .post-content pre {
+        background: var(--bg-surface); border: 1px solid var(--border);
+        border-radius: 10px; padding: 20px; margin-bottom: 1.5rem;
+        overflow-x: auto; font-size: 13px;
+      }
+      .post-content code { font-family: var(--font-mono); font-size: 13px; color: var(--accent-bright); }
+      .post-content pre code { color: var(--text); }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; padding-left: 0; list-style: none; }
+      .post-content li {
+        position: relative; padding-left: 18px; margin-bottom: 8px;
+        font-size: 14px; color: var(--text-muted); line-height: 1.7;
+      }
+      .post-content li::before {
+        content: ''; position: absolute; left: 0; top: 9px;
+        width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+      }
+      .post-content strong { color: var(--text); font-weight: 600; }
+      .post-content blockquote {
+        border-left: 3px solid var(--accent-dim); padding-left: 20px;
+        margin: 1.5rem 0; font-style: italic; color: var(--text-dim);
+      }
+      .back-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);
+        margin-bottom: 32px; transition: color 0.3s;
+      }
+      .back-link:hover { color: var(--accent-bright); }
+      .back-link svg { width: 16px; height: 16px; }
+      .footer {
+        border-top: 1px solid var(--border); padding: 40px 0; text-align: center;
+      }
+      .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+      .footer-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 14px; color: var(--text-muted);
+      }
+      .footer-link:hover { color: var(--accent-bright); }
+      .footer-link svg { width: 18px; height: 18px; }
+      .footer-copy { font-size: 13px; color: var(--text-dim); }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="../../" class="nav-logo">christian.dev</a>
+        <div class="nav-links">
+          <a href="../../">Home</a>
+          <a href="../">Blog</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Post Header -->
+    <header class="post-header">
+      <div class="container">
+        <a href="../" class="back-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to blog
+        </a>
+        <div class="post-tags">
+          <span class="post-tag">Docker</span>
+          <span class="post-tag">DevOps</span>
+        </div>
+        <h1 class="post-title">Docker for Frontend Developers: What You Actually Need to Know</h1>
+        <div class="post-meta">
+          <span>November 5, 2023</span>
+          <span>8 min read</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <article class="post-content">
+      <div class="container">
+
+            <p>Docker used to be something I associated with backend developers and DevOps engineers. As a frontend developer, I thought it had nothing to do with me. Then I joined a team that used Docker for everything, including local development environments, CI pipelines, and production deployments. It took a while, but now I consider Docker one of the most useful tools in my toolkit. Here is the stuff I wish someone had explained to me when I started.</p>
+
+            <h2>Dockerizing a Single-Page Application</h2>
+
+            <p>The most common use case for frontend developers is containerizing a production build of your SPA. The pattern is straightforward: use a multi-stage build where the first stage compiles your app and the second stage serves it with nginx. Here is the Dockerfile I use for most Angular and Ionic projects:</p>
+
+<pre><code># Stage 1: Build
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build -- --configuration=production
+
+# Stage 2: Serve
+FROM nginx:alpine
+COPY --from=build /app/www /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+</code></pre>
+
+            <p>The multi-stage approach is important because your final image only contains the compiled static files and nginx. It does not include node_modules, source code, or build tools. This keeps the image small, typically under 30 MB for a typical SPA, compared to hundreds of megabytes if you ship the full Node.js build environment.</p>
+
+            <h2>The Nginx Configuration</h2>
+
+            <p>If you are deploying a SPA, you need nginx to handle client-side routing. Without this configuration, refreshing the browser on any route other than the root will return a 404. Here is the nginx config I pair with the Dockerfile above:</p>
+
+<pre><code>server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Handle client-side routing
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Cache static assets aggressively
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2?)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Don't cache index.html
+    location = /index.html {
+        expires -1;
+        add_header Cache-Control "no-store, no-cache, must-revalidate";
+    }
+
+    # Gzip compression
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml;
+    gzip_min_length 256;
+}
+</code></pre>
+
+            <p>The caching strategy here is important. Your JavaScript and CSS files should have content hashes in their filenames (Angular CLI does this by default), so they can be cached indefinitely. But <code>index.html</code> must never be cached, because it contains the references to those hashed files. If a user loads a cached <code>index.html</code> that references files that no longer exist on the server, the app will break.</p>
+
+            <h2>Docker for Local Development</h2>
+
+            <p>Beyond production builds, Docker is incredibly useful for standardizing development environments. Instead of every developer installing different versions of Node.js and dealing with "works on my machine" issues, you can define the entire environment in a <code>docker-compose.yml</code>:</p>
+
+<pre><code>version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - API_URL=http://api:3000
+
+  api:
+    image: node:20-alpine
+    working_dir: /api
+    volumes:
+      - ../api:/api
+    ports:
+      - "3000:3000"
+    command: npm run dev
+
+  db:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+</code></pre>
+
+            <p>With this setup, a new developer joins the team, clones the repo, runs <code>docker-compose up</code>, and has the entire stack running in minutes. No installing MongoDB. No configuring Node versions. No wondering why the API is not connecting. Everything is defined in code and works the same on every machine.</p>
+
+            <h2>Optimizing Build Times</h2>
+
+            <p>One thing that frustrated me early on was how slow Docker builds were. Every time I changed a single line of code, Docker would reinstall all of node_modules from scratch. The fix is understanding Docker's layer caching. Each instruction in a Dockerfile creates a layer, and Docker caches layers that have not changed. The key insight is to copy <code>package.json</code> and <code>package-lock.json</code> first, run <code>npm ci</code>, and only then copy the rest of your source code:</p>
+
+<pre><code># This order is important for caching
+COPY package*.json ./
+RUN npm ci
+# Source code changes won't invalidate the npm ci layer
+COPY . .
+</code></pre>
+
+            <p>With this ordering, the <code>npm ci</code> layer is cached unless <code>package.json</code> or <code>package-lock.json</code> changes. Source code changes only invalidate the final <code>COPY</code> layer, making rebuilds much faster.</p>
+
+            <h2>A Note on .dockerignore</h2>
+
+            <p>Always create a <code>.dockerignore</code> file. Without it, Docker sends your entire project directory (including <code>node_modules</code>, <code>.git</code>, and build artifacts) to the Docker daemon as build context. This can add minutes to your build time for no reason:</p>
+
+<pre><code>node_modules
+.git
+dist
+www
+.angular
+*.md
+.env*
+</code></pre>
+
+            <p>Docker is not something you need to master overnight. Start with a production Dockerfile for your SPA, then gradually adopt it for development environments and CI. Once you get comfortable with the basics, it becomes second nature, and you will wonder how you ever managed without it.</p>
+
+      </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-links">
+          <a class="footer-link" href="https://github.com/chpecson" target="_blank" rel="noreferrer">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a class="footer-link" href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <div class="footer-copy">&copy; 2025 Christian Pecson</div>
+      </div>
+    </footer>
+
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+  </body>
+</html>

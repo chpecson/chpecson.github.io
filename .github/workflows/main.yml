@@ -29,13 +29,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '22.12.0'
+          node-version: '22.12.0'
       
       - run: npm install
       - run: npm run build-sass
       
-      - name: Update resources
-        uses: test-room-7/action-update-file@v1
-        with:
-          file-path: css/style.min.css
-          commit-msg: "${{ github.event.head_commit.message || 'Build: Update compiled CSS' }}"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit CSS changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add css/
+          git diff --quiet && git diff --staged --quiet || git commit -m "Build: Update compiled CSS files"

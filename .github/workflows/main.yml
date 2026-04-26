@@ -24,6 +24,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Sass Build
         uses: actions/setup-node@v2
@@ -41,4 +44,6 @@ jobs:
           git diff --quiet && git diff --staged --quiet || git commit -m "Build: Update compiled CSS files"
 
       - name: Push CSS changes
-        run: git push origin HEAD:${{ github.head_ref }}
+        run: |
+          git pull --rebase origin ${{ github.head_ref }}
+          git push origin HEAD:refs/heads/${{ github.head_ref }}

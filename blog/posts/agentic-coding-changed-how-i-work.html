@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How Agentic Coding Tools Changed the Way I Build Software - Christian Pecson</title>
+    <meta name="description" content="From Claude Code to Cursor to ChatGPT — how I integrated AI-powered development tools into my daily workflow." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      :root {
+        --bg: #0B1120; --bg-surface: #131B2E; --bg-surface-alt: #0F1729;
+        --accent: #818CF8; --accent-bright: #A5B4FC; --accent-dim: #4F46E5;
+        --warm: #F59E0B; --text: #E2E8F0; --text-muted: #94A3B8; --text-dim: #64748B;
+        --border: rgba(255,255,255,0.06); --border-accent: rgba(129,140,248,0.2);
+        --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace; --max-width: 720px;
+      }
+      html { scroll-behavior: smooth; }
+      body { font-family: var(--font-body); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+      body::after { content: ''; position: fixed; inset: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.4; }
+      a { color: var(--accent-bright); text-decoration: none; transition: color 0.3s; }
+      a:hover { color: var(--warm); }
+      .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+      .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 0; background: rgba(11,17,32,0.85); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+      .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+      .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text); }
+      .nav-logo:hover { color: var(--accent-bright); }
+      .nav-links { display: flex; gap: 8px; }
+      .nav-links a { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); padding: 6px 14px; border-radius: 8px; transition: all 0.3s; }
+      .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+      .post-header { padding: 140px 0 40px; }
+      .post-tags { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+      .post-tag { font-family: var(--font-mono); font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(129,140,248,0.08); color: var(--accent); border: 1px solid rgba(129,140,248,0.12); }
+      .post-title { font-family: var(--font-display); font-size: clamp(1.8rem,3.5vw,2.5rem); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 16px; }
+      .post-meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); display: flex; gap: 16px; }
+      .post-content { padding: 48px 0 80px; }
+      .post-content p { margin-bottom: 1.2rem; color: var(--text-muted); line-height: 1.8; font-size: 15px; }
+      .post-content h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-top: 2.5rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+      .post-content h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 2rem; margin-bottom: 0.8rem; }
+      .post-content pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 1.5rem; overflow-x: auto; font-size: 13px; }
+      .post-content code { font-family: var(--font-mono); font-size: 13px; color: var(--accent-bright); }
+      .post-content pre code { color: var(--text); }
+      .post-content ul, .post-content ol { margin-bottom: 1.2rem; padding-left: 0; list-style: none; }
+      .post-content li { position: relative; padding-left: 18px; margin-bottom: 8px; font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+      .post-content li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+      .post-content strong { color: var(--text); font-weight: 600; }
+      .post-content blockquote { border-left: 3px solid var(--accent-dim); padding-left: 20px; margin: 1.5rem 0; font-style: italic; color: var(--text-dim); }
+      .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin-bottom: 32px; transition: color 0.3s; }
+      .back-link:hover { color: var(--accent-bright); }
+      .back-link svg { width: 16px; height: 16px; }
+      .footer { border-top: 1px solid var(--border); padding: 40px 0; text-align: center; }
+      .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+      .footer-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted); }
+      .footer-link:hover { color: var(--accent-bright); }
+      .footer-link svg { width: 18px; height: 18px; }
+      .footer-copy { font-size: 13px; color: var(--text-dim); }
+    </style>
+  </head>
+  <body>
+    <nav class="nav"><div class="nav-inner"><a href="../../" class="nav-logo">christian.dev</a><div class="nav-links"><a href="../../">Home</a><a href="../">Blog</a></div></div></nav>
+
+    <header class="post-header">
+      <div class="container">
+        <a href="../" class="back-link"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to blog</a>
+        <div class="post-tags"><span class="post-tag">AI</span><span class="post-tag">Developer Tools</span></div>
+        <h1 class="post-title">How Agentic Coding Tools Changed the Way I Build Software</h1>
+        <div class="post-meta"><span>April 10, 2026</span><span>8 min read</span></div>
+      </div>
+    </header>
+
+    <article class="post-content">
+      <div class="container">
+        <p>A year ago, I was skeptical. I had tried GitHub Copilot early on and found it useful for autocomplete, but not much else. Then I discovered agentic coding tools — Claude Code, Cursor, and ChatGPT with code interpreter — and my entire development workflow transformed in ways I didn't expect.</p>
+
+        <p>This isn't a hype piece. I want to share concrete examples of how these tools changed my day-to-day work, where they shine, where they fall short, and why I think every software engineer needs to develop fluency with them.</p>
+
+        <h2>What "Agentic Coding" Actually Means</h2>
+
+        <p>The key difference between traditional AI autocomplete and agentic coding is <strong>autonomy</strong>. An agentic tool doesn't just predict the next line — it can read your codebase, understand context, run commands, edit multiple files, and execute multi-step tasks with minimal guidance.</p>
+
+        <p>When I tell Claude Code to "add offline support to the chat module," it doesn't just generate a code snippet. It reads the existing chat service, understands the data flow, creates an IndexedDB layer, modifies the service to check connectivity, updates the UI to show offline indicators, and even writes tests. That's a fundamentally different interaction model.</p>
+
+        <h2>My Daily Toolkit</h2>
+
+        <h3>Claude Code — The Heavy Lifter</h3>
+
+        <p>Claude Code has become my go-to for substantial engineering tasks. Refactoring a service layer, migrating from one pattern to another, implementing a feature across multiple files — this is where it excels. I use it directly in my terminal, and the fact that it understands my full project context makes it incredibly effective.</p>
+
+        <p>My typical workflow looks like this:</p>
+
+        <pre><code># Start a task with clear context
+claude "Refactor the authentication module to use the
+new token refresh strategy. The current implementation
+is in src/auth/ and the new API spec is in docs/auth-v2.md"</code></pre>
+
+        <p>What I love about Claude Code is that it thinks before it acts. It'll read the relevant files, form a plan, and then execute — often catching edge cases I would have missed in a manual implementation.</p>
+
+        <h3>Cursor — The IDE Companion</h3>
+
+        <p>Cursor lives in my editor and handles the more granular work. Inline completions that actually understand my codebase, quick refactors, generating unit tests for a function I just wrote. It's like pair programming with someone who has read every file in my project.</p>
+
+        <p>The "Cmd+K" workflow for inline edits is addictive. Select a block of code, describe what you want changed, and it just happens. I find myself using it most for:</p>
+
+        <ul>
+          <li>Converting callback-based code to async/await</li>
+          <li>Adding TypeScript types to untyped JavaScript</li>
+          <li>Generating test cases from function signatures</li>
+          <li>Writing documentation for complex functions</li>
+        </ul>
+
+        <h3>ChatGPT — The Thinking Partner</h3>
+
+        <p>I use ChatGPT differently than the other two. It's my rubber duck for architecture decisions, my research assistant for unfamiliar APIs, and my brainstorming partner when I'm stuck on a design problem. When I was planning the migration from Cordova to Capacitor, I spent hours in conversation with ChatGPT mapping out the approach before writing a single line of code.</p>
+
+        <h2>Real Impact: Before and After</h2>
+
+        <p>Here's a concrete example. Last month I needed to add push notification support to both our iOS and Android apps — native implementations using Swift and Kotlin respectively, plus the backend handler in NestJS.</p>
+
+        <p><strong>Before agentic tools</strong>, this would have been a 3-4 day task. Research the native APIs, set up Firebase Cloud Messaging, implement the handlers, test on both platforms, handle edge cases like permission flows and token refresh.</p>
+
+        <p><strong>With agentic tools</strong>, I completed the entire feature in about 6 hours. Claude Code handled the NestJS backend and the Kotlin implementation. I used Cursor for the Swift side since I wanted more granular control while learning SwiftUI patterns. ChatGPT helped me think through the notification grouping strategy.</p>
+
+        <p>The code quality was production-grade. Not "AI-generated-looking" code, but clean, idiomatic implementations that followed each platform's conventions. I reviewed everything carefully, made adjustments, but the foundation was solid.</p>
+
+        <h2>Where They Fall Short</h2>
+
+        <p>I want to be honest about the limitations:</p>
+
+        <ul>
+          <li><strong>Complex state management</strong> — When business logic involves intricate state machines with many edge cases, AI tools can miss subtle interactions. I still design these by hand.</li>
+          <li><strong>Novel architecture</strong> — If you're doing something truly new that doesn't have established patterns, the tools are less helpful. They're best when applying known patterns to your specific context.</li>
+          <li><strong>Performance-critical code</strong> — AI-generated code works correctly but isn't always optimal. For hot paths, I still profile and optimize manually.</li>
+          <li><strong>Security-sensitive code</strong> — I always review authentication, authorization, and encryption code with extra scrutiny regardless of who or what wrote it.</li>
+        </ul>
+
+        <h2>The Skill That Matters Now: Prompt Engineering</h2>
+
+        <p>The engineers who get the most out of these tools aren't necessarily the most experienced coders. They're the ones who can articulate what they want clearly and provide the right context. <strong>Prompt engineering is now a core software engineering skill.</strong></p>
+
+        <p>Some patterns I've found effective:</p>
+
+        <ul>
+          <li>Start with the "why" before the "what" — explain the business context</li>
+          <li>Reference existing patterns in your codebase — "follow the same pattern as UserService"</li>
+          <li>Be explicit about constraints — "no external dependencies" or "must support offline"</li>
+          <li>Review iteratively — don't accept the first output, refine through conversation</li>
+        </ul>
+
+        <h2>Looking Forward</h2>
+
+        <p>We're still in the early days of agentic development. The tools are getting better at an astonishing rate. A year from now, I expect the boundary between "what the AI writes" and "what I write" will be even blurrier — and that's a good thing.</p>
+
+        <p>My advice to developers who haven't adopted these tools yet: start now. Not because they'll replace you, but because the engineers who can effectively collaborate with AI agents will build better software, faster. It's not about writing less code — it's about solving more problems.</p>
+      </div>
+    </article>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-links">
+          <a class="footer-link" href="https://github.com/chpecson" target="_blank" rel="noreferrer"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+          <a class="footer-link" href="https://www.linkedin.com/in/chpecson" target="_blank" rel="noreferrer"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
+        </div>
+        <div class="footer-copy">&copy; 2026 Christian Pecson</div>
+      </div>
+    </footer>
+    <script defer src="https://analytics.eu.umami.is/script.js" data-website-id="3f3c3344-b207-448e-b554-5d256d7179db"></script>
+  </body>
+</html>

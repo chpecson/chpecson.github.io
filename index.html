@@ -487,13 +487,13 @@
       </div>
 
       <div class="projects-list">
-        <!-- StatLingo Android -->
+        <!-- MeowPass -->
         <div class="project reveal">
           <div class="project-info">
-            <h3 class="project-name">StatLingo Android</h3>
+            <h3 class="project-name">MeowPass</h3>
             <p class="project-desc">
-              Real-time multilingual communication for healthcare and hospitality frontline teams. Speech-to-text,
-              on-device translation (20+ languages), neural TTS, and verified medical phrases—all working offline.
+              CLI-first secret management for developers. Store API keys, sync .env files, and share secrets
+              with your team — all end-to-end encrypted with AES-256-GCM and zero-knowledge architecture.
             </p>
             <button class="project-expand-btn" onclick="toggleProject(this)">
               Show details <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -503,26 +503,29 @@
             <div class="project-expand">
               <div class="project-section-title">Features</div>
               <ul class="project-list">
-                <li>Speech-to-text, ML Kit translation (20+ languages), neural TTS (Piper VITS), Google TTS fallback
-                </li>
-                <li>Auto-punctuation, beep feedback, Google Assistant-style voice animation</li>
-                <li>Phrasebook: 27 verified medical phrases across 8 categories, 21 language translations, search,
-                  favorites, recents</li>
-                <li>Guided Flows: Mood Check (4 steps), Pain Assessment (5 steps), Safety Screening (4 steps)</li>
-                <li>Voice Packs: Bundled EN/ES neural voices, 16 downloadable languages with progress tracking</li>
-                <li>7-step onboarding flow, floating Translate FAB, offline support, HIPAA-conscious design (no patient
-                  data stored)</li>
+                <li>CLI tool (Homebrew): set, get, list, delete secrets with auto-clipboard copy</li>
+                <li>.env sync: pull/push secrets per environment (staging, production)</li>
+                <li>Vault management: create per-project vaults, share with teams via X25519 key exchange</li>
+                <li>Tiered pricing with Lemon Squeezy: Free (1 vault, 50 secrets), Pro ($5/mo), Team ($9/user/mo)</li>
+                <li>Landing page with interactive terminal demo, CLI reference guide, and legal pages</li>
+              </ul>
+              <div class="project-section-title">Architecture</div>
+              <ul class="project-list">
+                <li>Go API on AWS Lambda (arm64) + API Gateway, Neon Postgres database</li>
+                <li>Argon2id key derivation, AES-256-GCM encryption, X25519 team key exchange</li>
+                <li>Next.js 16 landing page deployed on Netlify</li>
+                <li>Homebrew distribution via GoReleaser + custom tap</li>
               </ul>
             </div>
             <div class="project-tech">
-              <span class="project-tech-tag">Kotlin 2.1</span>
-              <span class="project-tech-tag">Jetpack Compose</span>
-              <span class="project-tech-tag">Material 3</span>
-              <span class="project-tech-tag">Hilt</span>
-              <span class="project-tech-tag">Room</span>
-              <span class="project-tech-tag">DataStore</span>
-              <span class="project-tech-tag">Piper VITS</span>
-              <span class="project-tech-tag">ML Kit</span>
+              <span class="project-tech-tag">Go</span>
+              <span class="project-tech-tag">Next.js 16</span>
+              <span class="project-tech-tag">TypeScript</span>
+              <span class="project-tech-tag">AWS Lambda</span>
+              <span class="project-tech-tag">Neon Postgres</span>
+              <span class="project-tech-tag">Tailwind CSS</span>
+              <span class="project-tech-tag">Lemon Squeezy</span>
+              <span class="project-tech-tag">Cobra CLI</span>
             </div>
           </div>
           <div class="project-media">
@@ -535,14 +538,84 @@
               <div class="carousel" data-carousel>
                 <div class="carousel-track">
                   <img
-                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/statlingo-android/statlingo-android-1.webp"
-                    alt="StatLingo Android" loading="lazy" />
+                    src="images/meowpass/meowpass-1.webp"
+                    alt="MeowPass" loading="lazy" />
                   <img
-                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/statlingo-android/statlingo-android-2.webp"
-                    alt="StatLingo Android" loading="lazy" />
+                    src="images/meowpass/meowpass-2.webp"
+                    alt="MeowPass" loading="lazy" />
                   <img
-                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/statlingo-android/statlingo-android-3.webp"
-                    alt="StatLingo Android" loading="lazy" />
+                    src="images/meowpass/meowpass-3.webp"
+                    alt="MeowPass" loading="lazy" />
+                  <img
+                    src="images/meowpass/meowpass-4.webp"
+                    alt="MeowPass" loading="lazy" />
+                </div>
+                <div class="carousel-nav"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pickle Time -->
+        <div class="project reveal">
+          <div class="project-info">
+            <h3 class="project-name"><a href="https://pickletime.ph" target="_blank" rel="noopener noreferrer"
+                style="color:inherit;text-decoration:none;">Pickle Time</a></h3>
+            <p class="project-desc">
+              The Philippines' premier pickleball court booking platform. Book courts, join open play sessions,
+              hire coaches, and enter tournaments — with real-time availability, interactive maps, and payment
+              verification for players and venue operators.
+            </p>
+            <button class="project-expand-btn" onclick="toggleProject(this)">
+              Show details <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="project-expand">
+              <div class="project-section-title">For Players</div>
+              <ul class="project-list">
+                <li>Location-based court discovery with interactive OpenStreetMap and distance sorting</li>
+                <li>Real-time booking with availability calendar and instant confirmation</li>
+                <li>GCash, PayMaya, and bank transfer payment with proof upload verification</li>
+                <li>Open play sessions, coaching marketplace, and tournament registration</li>
+              </ul>
+              <div class="project-section-title">For Venue Operators</div>
+              <ul class="project-list">
+                <li>Venue and court management with bulk time slot creation and dynamic pricing</li>
+                <li>Payment verification dashboard, analytics, and booking management</li>
+                <li>Super admin panel with user management, venue oversight, and platform metrics</li>
+              </ul>
+            </div>
+            <div class="project-tech">
+              <span class="project-tech-tag">Next.js</span>
+              <span class="project-tech-tag">TypeScript</span>
+              <span class="project-tech-tag">PostgreSQL</span>
+              <span class="project-tech-tag">Prisma</span>
+              <span class="project-tech-tag">Clerk Auth</span>
+              <span class="project-tech-tag">Tailwind CSS</span>
+              <span class="project-tech-tag">shadcn/ui</span>
+              <span class="project-tech-tag">Leaflet</span>
+              <span class="project-tech-tag">AWS S3</span>
+            </div>
+          </div>
+          <div class="project-media">
+            <div class="project-media-header">
+              <div class="project-media-dot dot-red"></div>
+              <div class="project-media-dot dot-yellow"></div>
+              <div class="project-media-dot dot-green"></div>
+            </div>
+            <div class="project-media-body">
+              <div class="carousel" data-carousel>
+                <div class="carousel-track">
+                  <img
+                    src="images/pickle-time/pickle-time-1.webp"
+                    alt="Pickle Time" loading="lazy" />
+                  <img
+                    src="images/pickle-time/pickle-time-2.webp"
+                    alt="Pickle Time" loading="lazy" />
+                  <img
+                    src="images/pickle-time/pickle-time-3.webp"
+                    alt="Pickle Time" loading="lazy" />
                 </div>
                 <div class="carousel-nav"></div>
               </div>
@@ -553,10 +626,12 @@
         <!-- StatLingo Website -->
         <div class="project reveal">
           <div class="project-info">
-            <h3 class="project-name">StatLingo Website</h3>
+            <h3 class="project-name"><a href="https://statlingo.ai" target="_blank" rel="noopener noreferrer"
+                style="color:inherit;text-decoration:none;">StatLingo</a></h3>
             <p class="project-desc">
-              Marketing website for StatLingo platform serving healthcare and hospitality teams. Static-export ready,
-              deployed to Vercel. Showcases product features, pricing, solutions, compliance, and blog.
+              Real-time communication platform for healthcare and hospitality frontline teams. Instant alerts,
+              incident tracking, multilingual translation, and HIPAA-aligned audit trails — replacing radios,
+              overhead pages, and missed calls with a single system.
             </p>
             <button class="project-expand-btn" onclick="toggleProject(this)">
               Show details <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -564,27 +639,29 @@
               </svg>
             </button>
             <div class="project-expand">
-              <div class="project-section-title">Features</div>
+              <div class="project-section-title">Platform</div>
               <ul class="project-list">
-                <li>Homepage with platform overview, industry selector, features, pricing, and app preview</li>
-                <li>Healthcare & Hospitality solution pages with use cases and compliance info</li>
-                <li>8+ blog articles with category filtering (Healthcare/Hospitality)</li>
-                <li>FAQ (7 sections), Support, Compliance, Privacy Policy, Terms of Service</li>
-                <li>Lead capture forms with industry routing, static export deployment</li>
+                <li>Real-time alert system with auto-escalation, acknowledgment tracking, and response times under 8s</li>
+                <li>Multilingual translation with speech-to-text, neural TTS, and verified medical phrases (20+ languages)</li>
+                <li>Station dashboard, incident management, and full audit trail for compliance</li>
+                <li>Android app (Kotlin, Jetpack Compose) with offline support and on-device translation</li>
               </ul>
-              <div class="project-section-title">Stack</div>
+              <div class="project-section-title">Website</div>
               <ul class="project-list">
-                <li>Next.js 16 (App Router, SSG), TypeScript for type safety</li>
-                <li>Tailwind CSS v4 with inline theme syntax for responsive design</li>
-                <li>Instrument Sans (display) & Inter (body) fonts</li>
+                <li>Interactive product demo, pricing calculator, industry-specific solution pages</li>
+                <li>Next.js 16 (SSG), TypeScript, Tailwind CSS v4, Framer Motion</li>
+                <li>Blog, HIPAA compliance docs, lead capture with industry routing</li>
               </ul>
             </div>
             <div class="project-tech">
               <span class="project-tech-tag">Next.js 16</span>
+              <span class="project-tech-tag">Kotlin</span>
+              <span class="project-tech-tag">Jetpack Compose</span>
               <span class="project-tech-tag">TypeScript</span>
               <span class="project-tech-tag">Tailwind CSS v4</span>
-              <span class="project-tech-tag">React</span>
-              <span class="project-tech-tag">SSG</span>
+              <span class="project-tech-tag">ML Kit</span>
+              <span class="project-tech-tag">Framer Motion</span>
+              <span class="project-tech-tag">Netlify</span>
             </div>
           </div>
           <div class="project-media">
@@ -597,14 +674,14 @@
               <div class="carousel" data-carousel>
                 <div class="carousel-track">
                   <img
-                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/statlingo-website/statlingo-website-1.webp"
-                    alt="StatLingo Website" loading="lazy" />
+                    src="images/statlingo-website/statlingo-website-1.webp"
+                    alt="StatLingo" loading="lazy" />
                   <img
-                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/statlingo-website/statlingo-website-2.webp"
-                    alt="StatLingo Website" loading="lazy" />
+                    src="images/statlingo-website/statlingo-website-2.webp"
+                    alt="StatLingo" loading="lazy" />
                   <img
-                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/statlingo-website/statlingo-website-3.webp"
-                    alt="StatLingo Website" loading="lazy" />
+                    src="images/statlingo-website/statlingo-website-3.webp"
+                    alt="StatLingo" loading="lazy" />
                 </div>
                 <div class="carousel-nav"></div>
               </div>

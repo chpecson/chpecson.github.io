@@ -612,6 +612,75 @@
           </div>
         </div>
 
+        <!-- MeowPass -->
+        <div class="project reveal">
+          <div class="project-info">
+            <h3 class="project-name">MeowPass</h3>
+            <p class="project-desc">
+              CLI-first secret management for developers. Store API keys, sync .env files, and share secrets
+              with your team — all end-to-end encrypted with AES-256-GCM and zero-knowledge architecture.
+            </p>
+            <button class="project-expand-btn" onclick="toggleProject(this)">
+              Show details <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="project-expand">
+              <div class="project-section-title">Features</div>
+              <ul class="project-list">
+                <li>CLI tool (Homebrew): set, get, list, delete secrets with auto-clipboard copy</li>
+                <li>.env sync: pull/push secrets per environment (staging, production)</li>
+                <li>Vault management: create per-project vaults, share with teams via X25519 key exchange</li>
+                <li>Tiered pricing with Lemon Squeezy: Free (1 vault, 50 secrets), Pro ($5/mo), Team ($9/user/mo)</li>
+                <li>Landing page with interactive terminal demo, CLI reference guide, and legal pages</li>
+              </ul>
+              <div class="project-section-title">Architecture</div>
+              <ul class="project-list">
+                <li>Go API on AWS Lambda (arm64) + API Gateway, Neon Postgres database</li>
+                <li>Argon2id key derivation, AES-256-GCM encryption, X25519 team key exchange</li>
+                <li>Next.js 16 landing page deployed on Netlify</li>
+                <li>Homebrew distribution via GoReleaser + custom tap</li>
+              </ul>
+            </div>
+            <div class="project-tech">
+              <span class="project-tech-tag">Go</span>
+              <span class="project-tech-tag">Next.js 16</span>
+              <span class="project-tech-tag">TypeScript</span>
+              <span class="project-tech-tag">AWS Lambda</span>
+              <span class="project-tech-tag">Neon Postgres</span>
+              <span class="project-tech-tag">Tailwind CSS</span>
+              <span class="project-tech-tag">Lemon Squeezy</span>
+              <span class="project-tech-tag">Cobra CLI</span>
+            </div>
+          </div>
+          <div class="project-media">
+            <div class="project-media-header">
+              <div class="project-media-dot dot-red"></div>
+              <div class="project-media-dot dot-yellow"></div>
+              <div class="project-media-dot dot-green"></div>
+            </div>
+            <div class="project-media-body">
+              <div class="carousel" data-carousel>
+                <div class="carousel-track">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meowpass/meowpass-1.webp"
+                    alt="MeowPass" loading="lazy" />
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meowpass/meowpass-2.webp"
+                    alt="MeowPass" loading="lazy" />
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meowpass/meowpass-3.webp"
+                    alt="MeowPass" loading="lazy" />
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/chpecson/chpecson.github.io/images/meowpass/meowpass-4.webp"
+                    alt="MeowPass" loading="lazy" />
+                </div>
+                <div class="carousel-nav"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Inspector Toolbelt -->
         <div class="project reveal">
           <div class="project-info">
